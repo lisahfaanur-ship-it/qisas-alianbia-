@@ -13,7 +13,9 @@ import {
   ShieldCheck,
   Award,
   Star,
-  History
+  History,
+  Palette,
+  Flame
 } from 'lucide-react';
 import { AgeGroup } from '../types';
 
@@ -24,6 +26,7 @@ interface NavbarProps {
   setSelectedAge: (age: AgeGroup) => void;
   onOpenSearch: () => void;
   totalStars?: number;
+  streakDays?: number;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -32,13 +35,15 @@ export const Navbar: React.FC<NavbarProps> = ({
   selectedAge,
   setSelectedAge,
   onOpenSearch,
-  totalStars = 0
+  totalStars = 0,
+  streakDays = 1
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
     { id: 'home', label: 'الرئيسية', icon: Sparkles },
     { id: 'timeline', label: 'الخط الزمني', icon: History },
+    { id: 'coloring', label: 'كتيب التلوين', icon: Palette },
     { id: 'stories', label: 'قصص الأنبياء', icon: BookOpen },
     { id: 'achievements', label: 'الأوسمة والإنجازات', icon: Award },
     { id: 'audio', label: 'الاستماع الصوتي', icon: Headphones },
@@ -140,6 +145,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                 );
               })}
             </div>
+
+            {/* Streak Days Flame Button */}
+            <button
+              onClick={() => handleNavClick('home')}
+              id="header-streak-btn"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl border bg-orange-50 hover:bg-orange-100 text-orange-950 border-orange-200 transition-all font-black text-xs shadow-xs"
+              title={`سلسلة الحماس: ${streakDays} ${streakDays === 1 ? 'يوم' : 'أيام'} متتالية! اضغط لعرض تحدي اليوم`}
+            >
+              <Flame className="w-4 h-4 fill-orange-500 text-orange-600 animate-pulse" />
+              <span>{streakDays} {streakDays === 1 ? 'يوم' : 'أيام'}</span>
+            </button>
 
             {/* Stars & Achievements Badge Link */}
             <button

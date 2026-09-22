@@ -10,7 +10,9 @@ import {
   HelpCircle,
   TrendingUp,
   Flame,
-  ArrowRight
+  ArrowRight,
+  Palette,
+  Calendar
 } from 'lucide-react';
 import { ChildBadge, UserAchievementsState, ProphetStory } from '../types';
 import { INITIAL_BADGES } from '../utils/achievementsManager';
@@ -29,7 +31,7 @@ export const AchievementsDashboardView: React.FC<AchievementsDashboardViewProps>
   onNavigateTab
 }) => {
   const [activeFilter, setActiveFilter] = useState<'all' | 'unlocked' | 'locked'>('all');
-  const [activeCategory, setActiveCategory] = useState<'all' | 'story' | 'quiz' | 'explorer'>('all');
+  const [activeCategory, setActiveCategory] = useState<'all' | 'story' | 'quiz' | 'explorer' | 'streak'>('all');
 
   const unlockedCount = achievementsState.unlockedBadgeIds.length;
   const totalBadges = INITIAL_BADGES.length;
@@ -176,6 +178,64 @@ export const AchievementsDashboardView: React.FC<AchievementsDashboardViewProps>
         </div>
       </div>
 
+      {/* Coloring Gallery Section */}
+      {achievementsState.savedColoringWorks.length > 0 && (
+        <section className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-indigo-100 shadow-sm space-y-6">
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-2xl">🎨</div>
+              <div>
+                <h3 className="text-xl font-black text-slate-900">
+                  معرض أعمالي الفنية الملونة
+                </h3>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  لوحات فنية من إبداع أناملك الصغيرة
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => onNavigateTab('coloring')}
+              className="px-5 py-2 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold transition-all flex items-center gap-2"
+            >
+              <span>أضف لوحة جديدة</span>
+              <ArrowRight className="w-4 h-4 rotate-180" />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {achievementsState.savedColoringWorks.map((work) => (
+              <div 
+                key={work.id}
+                className="group relative bg-slate-50 rounded-2xl border-2 border-slate-100 overflow-hidden hover:border-indigo-300 transition-all aspect-square flex flex-col"
+              >
+                {/* SVG Render Preview (Simplified) */}
+                <div className="flex-1 bg-white p-4 flex items-center justify-center">
+                  <svg viewBox="0 0 400 400" className="w-full h-full">
+                    {prophets.find(p => p.id === work.storyId)?.coloringPages?.find(cp => cp.id === work.pageId)?.svgPaths.map(path => (
+                      <path
+                        key={path.id}
+                        d={path.d}
+                        fill={work.svgData[path.id] || '#FFFFFF'}
+                        stroke="#e2e8f0"
+                        strokeWidth="1"
+                      />
+                    ))}
+                  </svg>
+                </div>
+                <div className="p-3 bg-white border-t border-slate-100">
+                  <h4 className="text-[10px] font-black text-slate-900 truncate">{work.title}</h4>
+                  <div className="flex items-center gap-1 mt-1 text-[8px] text-slate-500 font-bold">
+                    <Calendar className="w-2.5 h-2.5" />
+                    <span>{new Date(work.savedAt).toLocaleDateString('ar-SA')}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Filter and Categories Controls */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
         {/* Status Filter */}
@@ -245,7 +305,16 @@ export const AchievementsDashboardView: React.FC<AchievementsDashboardViewProps>
               activeCategory === 'explorer' ? 'bg-amber-500 text-slate-950 font-black' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
-            🔎 البحث والتوثيق
+            🔎 البحث والتلوين
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveCategory('streak')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+              activeCategory === 'streak' ? 'bg-amber-500 text-slate-950 font-black' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+            }`}
+          >
+            🔥 الأيام المتتالية
           </button>
         </div>
       </div>

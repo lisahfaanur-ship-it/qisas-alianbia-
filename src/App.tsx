@@ -13,12 +13,16 @@ import { ParentGuideView } from './components/ParentGuideView';
 import { TimelineView } from './components/TimelineView';
 import { AdminDashboardView } from './components/AdminDashboardView';
 import { SearchModal } from './components/SearchModal';
+import { ColoringBookView } from './components/ColoringBookView';
 import { AchievementsDashboardView } from './components/AchievementsDashboardView';
 import { BadgeCelebrationModal } from './components/BadgeCelebrationModal';
 import {
   loadAchievementsState,
-  evaluateAchievements
+  evaluateAchievements,
+  saveAchievementsState,
+  recordDailyChallengeCompletion
 } from './utils/achievementsManager';
+import { SavedColoringWork } from './types';
 
 export default function App() {
   const [prophets, setProphets] = useState<ProphetStory[]>(() => {
@@ -57,6 +61,8 @@ export default function App() {
   const [selectedAge, setSelectedAge] = useState<AgeGroup>(initialRoute.initialAge);
   const [activeProphetId, setActiveProphetId] = useState<string>(initialRoute.initialStory);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+  const [achievementsState, setAchievementsState] = useState<UserAchievementsState>(loadAchievementsState);
+  const [newlyUnlockedBadges, setNewlyUnlockedBadges] = useState<ChildBadge[]>([]);
 
   // Keep URL query string in sync with deep links for seamless sharing and browser navigation
   useEffect(() => {
@@ -129,6 +135,30 @@ export default function App() {
     setProphets(prev => [...prev, newProphet]);
   };
 
+  const handleSaveColoringWork = (work: SavedColoringWork) => {
+    const updatedState = {
+      ...achievementsState,
+      savedColoringWorks: [...achievementsState.savedColoringWorks, work]
+    };
+    const { newState, newlyUnlockedBadges: newBadges } = evaluateAchievements(updatedState);
+    setAchievementsState(newState);
+    saveAchievementsState(newState);
+    if (newBadges.length > 0) {
+      setNewlyUnlockedBadges(prev => [...prev, ...newBadges]);
+    }
+  };
+
+  const handleCompleteDailyChallenge = (bonusStars: number = 30) => {
+    const { newState, newlyUnlockedBadges: newBadges } = recordDailyChallengeCompletion(
+      achievementsState,
+      bonusStars
+    );
+    setAchievementsState(newState);
+    if (newBadges.length > 0) {
+      setNewlyUnlockedBadges(prev => [...prev, ...newBadges]);
+    }
+  };
+
   const selectedProphet = prophets.find(p => p.id === activeProphetId) || prophets[0];
 
   return (
@@ -140,6 +170,8 @@ export default function App() {
         selectedAge={selectedAge}
         setSelectedAge={setSelectedAge}
         onOpenSearch={() => setIsSearchOpen(true)}
+        totalStars={achievementsState.totalStars}
+        streakDays={achievementsState.readingStreakDays}
       />
 
       {/* Main Content View Port */}
@@ -148,8 +180,10 @@ export default function App() {
           <HomeView
             prophets={prophets}
             selectedAge={selectedAge}
+            achievementsState={achievementsState}
             onSelectStory={handleSelectStory}
             onNavigateTab={setCurrentTab}
+            onCompleteChallenge={handleCompleteDailyChallenge}
           />
         )}
 
@@ -195,6 +229,23 @@ export default function App() {
           />
         )}
 
+        {currentTab === 'coloring' && (
+          <ColoringBookView
+            prophets={prophets}
+            onSaveWork={handleSaveColoringWork}
+            onBack={() => setCurrentTab('home')}
+          />
+        )}
+
+        {currentTab === 'achievements' && (
+          <AchievementsDashboardView
+            achievementsState={achievementsState}
+            prophets={prophets}
+            onSelectStory={handleSelectStory}
+            onNavigateTab={setCurrentTab}
+          />
+        )}
+
         {currentTab === 'sources' && (
           <SourcesPageView
             prophets={prophets}
@@ -224,6 +275,14 @@ export default function App() {
 
       {/* Global Footer */}
       <Footer onNavigateTab={setCurrentTab} />
+
+      {/* Badge Celebration Modal */}
+      {newlyUnlockedBadges.length > 0 && (
+        <BadgeCelebrationModal
+          badge={newlyUnlockedBadges[0]}
+          onClose={() => setNewlyUnlockedBadges(prev => prev.slice(1))}
+        />
+      )}
     </div>
   );
 }

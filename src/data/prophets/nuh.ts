@@ -343,6 +343,23 @@ export const nuhStory: ProphetStory =   {
       ],
       familyActivity: 'صناعة نموذج لسفينة نوح الورقية بمشاركة الوالدين، وكتابة صفات الصبر والشكر على أشرعتها.'
     },
+    coloringPages: [
+      {
+        id: 'nuh-ark',
+        title: 'سفينة نوح العجيبة',
+        description: 'لون السفينة الخشبية وهي تبحر فوق الأمواج بسلام.',
+        svgPaths: [
+          { id: 'water', d: 'M0 350c50-20 100 20 150 0s100 20 150 0 100 20 150 0v50H0z', defaultColor: '#3b82f6', label: 'الماء' },
+          { id: 'ark-body', d: 'M50 300l50 50h200l50-50z', defaultColor: '#92400e', label: 'جسم السفينة' },
+          { id: 'ark-top', d: 'M100 300h200v-50H100z', defaultColor: '#b45309', label: 'سطح السفينة' },
+          { id: 'window1', d: 'M120 270h30v20h-30z', defaultColor: '#fef3c7', label: 'نافذة 1' },
+          { id: 'window2', d: 'M180 270h30v20h-30z', defaultColor: '#fef3c7', label: 'نافذة 2' },
+          { id: 'window3', d: 'M240 270h30v20h-30z', defaultColor: '#fef3c7', label: 'نافذة 3' },
+          { id: 'cloud1', d: 'M50 80c20 0 40 20 40 40s-20 40-40 40-40-20-40-40 20-40 40-40z', defaultColor: '#f8fafc', label: 'سحابة 1' },
+          { id: 'cloud2', d: 'M300 100c20 0 40 20 40 40s-20 40-40 40-40-20-40-40 20-40 40-40z', defaultColor: '#f8fafc', label: 'سحابة 2' }
+        ]
+      }
+    ],
     accuracyCheck: {
       allInfoSourced: true,
       noFabricatedDetails: true,

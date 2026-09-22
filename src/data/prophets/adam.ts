@@ -260,6 +260,22 @@ export const adamStory: ProphetStory =   {
       { id: 'voc4', word: 'التوبة', meaning: 'الرجوع عن الخطأ والاعتذار لله بصدق والوعد بعدم تكراره.' },
       { id: 'voc5', word: 'خليفة', meaning: 'من يقوم بعمارة الأرض وتنفيذ أمر الله فيها.' }
     ],
+    coloringPages: [
+      {
+        id: 'adam-garden',
+        title: 'بستان الجنة الجميل',
+        description: 'لون الأشجار والثمار الطيبة في جنة آدم وحواء.',
+        svgPaths: [
+          { id: 'sky', d: 'M0 0h400v400H0z', defaultColor: '#f0f9ff', label: 'السماء' },
+          { id: 'ground', d: 'M0 300c100-20 300-20 400 0v100H0v-100z', defaultColor: '#ecfdf5', label: 'الأرض' },
+          { id: 'trunk', d: 'M180 320h40v-100h-40z', defaultColor: '#78350f', label: 'جذع الشجرة' },
+          { id: 'leaves', d: 'M200 100c50 0 100 40 100 100s-50 100-100 100-100-40-100-100 50-100 100-100z', defaultColor: '#10b981', label: 'أوراق الشجرة' },
+          { id: 'apple1', d: 'M150 180a15 15 0 1 0 30 0 15 15 0 1 0-30 0z', defaultColor: '#ef4444', label: 'ثمرة 1' },
+          { id: 'apple2', d: 'M220 220a15 15 0 1 0 30 0 15 15 0 1 0-30 0z', defaultColor: '#ef4444', label: 'ثمرة 2' },
+          { id: 'sun', d: 'M320 80a30 30 0 1 0 60 0 30 30 0 1 0-60 0z', defaultColor: '#fde047', label: 'الشمس' }
+        ]
+      }
+    ],
     cautionsAndDiscrepancies: [
       {
         id: 'c1',

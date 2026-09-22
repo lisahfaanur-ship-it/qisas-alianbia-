@@ -101,6 +101,28 @@ export interface DifficultWord {
   pronunciationHint?: string; // e.g. phonetic or specific text for TTS if needed
 }
 
+export interface ColoringPage {
+  id: string;
+  title: string;
+  description: string;
+  svgPaths: {
+    id: string;
+    d: string;
+    defaultColor?: string;
+    label?: string; // for screen readers or help
+  }[];
+}
+
+export interface SavedColoringWork {
+  id: string;
+  pageId: string;
+  storyId: string;
+  title: string;
+  svgData: Record<string, string>; // pathId -> color
+  previewUrl: string; // base64 preview
+  savedAt: string;
+}
+
 export interface ProphetStory {
   id: string;
   name: string;
@@ -122,6 +144,7 @@ export interface ProphetStory {
   coreValues: CoreValue[];
   didYouKnow: DidYouKnowFact[];
   vocabulary?: DifficultWord[];
+  coloringPages?: ColoringPage[];
   cautionsAndDiscrepancies: CautionItem[];
   sources: SourceReference[];
   quiz: QuizQuestion[];
@@ -156,7 +179,10 @@ export interface UserAchievementsState {
   completedQuizScores: Record<string, { score: number; total: number; completedAt: string }>; // prophetId -> score
   unlockedBadgeIds: string[]; // list of unlocked badge IDs
   badgeUnlockDates: Record<string, string>; // badgeId -> timestamp
+  savedColoringWorks: SavedColoringWork[];
   totalStars: number; // accumulated stars / points
   readingStreakDays: number;
   lastActiveDate: string;
+  completedChallengeDates?: string[]; // list of dates YYYY-MM-DD when daily challenge was completed
+  lastDailyChallengeCompletedAt?: string;
 }

@@ -12,23 +12,29 @@ import {
   Shield,
   Layers,
   Award,
-  History
+  History,
+  Palette
 } from 'lucide-react';
-import { ProphetStory, AgeGroup } from '../types';
+import { ProphetStory, AgeGroup, UserAchievementsState } from '../types';
 import { SymbolicArt } from './SymbolicArt';
+import { DailyChallengeCard } from './DailyChallengeCard';
 
 interface HomeViewProps {
   prophets: ProphetStory[];
   selectedAge: AgeGroup;
+  achievementsState: UserAchievementsState;
   onSelectStory: (id: string) => void;
   onNavigateTab: (tab: string) => void;
+  onCompleteChallenge: (earnedStars: number) => void;
 }
 
 export const HomeView: React.FC<HomeViewProps> = ({
   prophets,
   selectedAge,
+  achievementsState,
   onSelectStory,
-  onNavigateTab
+  onNavigateTab,
+  onCompleteChallenge
 }) => {
   const educationalValues = [
     {
@@ -129,6 +135,16 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
         </div>
       </section>
+
+      {/* Daily Challenge Component: تحدي اليوم وعداد الأيام المتتالية */}
+      <DailyChallengeCard
+        prophets={prophets}
+        selectedAge={selectedAge}
+        achievementsState={achievementsState}
+        onSelectStory={onSelectStory}
+        onCompleteChallenge={onCompleteChallenge}
+        onNavigateTab={onNavigateTab}
+      />
 
       {/* Featured Stories Section: أشهر القصص */}
       <section className="space-y-6">
@@ -249,6 +265,49 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <span>عرض الخط الزمني</span>
             <ArrowLeft className="w-5 h-5" />
           </button>
+        </div>
+      </section>
+      
+      {/* Digital Coloring Book Teaser */}
+      <section className="bg-gradient-to-br from-indigo-50 via-white to-purple-50 rounded-3xl p-8 sm:p-10 border-2 border-indigo-100 shadow-sm relative overflow-hidden group">
+        <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-indigo-100 rounded-full blur-3xl opacity-50 group-hover:scale-125 transition-transform" />
+        
+        <div className="relative flex flex-col lg:flex-row items-center gap-10">
+          <div className="flex-1 space-y-4 text-center lg:text-right">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold border border-indigo-200">
+              <Palette className="w-3.5 h-3.5" />
+              <span>إبداع وفن</span>
+            </div>
+            <h3 className="text-2xl sm:text-4xl font-black text-slate-900 leading-tight">
+              لوّن وعبر عن إبداعك في كتيب التلوين الرقمي 🎨
+            </h3>
+            <p className="text-sm sm:text-lg text-slate-600 font-medium leading-relaxed max-w-2xl">
+              حول القصص التي قرأتها إلى لوحات فنية رائعة بألوانك المفضلة، واحفظ أعمالك الفنية في معرض إنجازاتك الخاص.
+            </p>
+            <div className="pt-2">
+              <button
+                onClick={() => onNavigateTab('coloring')}
+                className="px-10 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-base sm:text-lg shadow-xl shadow-indigo-200 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center gap-3 mx-auto lg:mr-0"
+              >
+                <span>ابدأ التلوين الآن</span>
+                <ArrowLeft className="w-6 h-6 rotate-180" />
+              </button>
+            </div>
+          </div>
+          
+          <div className="w-full lg:w-1/3 flex justify-center">
+            <div className="relative w-48 h-48 sm:w-64 sm:h-64">
+              <div className="absolute inset-0 bg-white rounded-3xl border-4 border-slate-900 rotate-6 shadow-xl" />
+              <div className="absolute inset-0 bg-white rounded-3xl border-4 border-slate-900 -rotate-3 shadow-lg flex items-center justify-center p-4">
+                <svg viewBox="0 0 100 100" className="w-full h-full text-slate-200">
+                  <circle cx="50" cy="50" r="30" fill="currentColor" stroke="black" strokeWidth="2" />
+                  <path d="M50 20 L50 80 M20 50 L80 50" stroke="black" strokeWidth="2" />
+                </svg>
+                <div className="absolute top-2 right-2 w-8 h-8 rounded-full bg-amber-400 border-2 border-slate-900" />
+                <div className="absolute bottom-4 left-4 w-6 h-6 rounded-full bg-rose-400 border-2 border-slate-900" />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

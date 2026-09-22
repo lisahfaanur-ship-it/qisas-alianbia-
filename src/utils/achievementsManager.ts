@@ -106,10 +106,32 @@ export const INITIAL_BADGES: ChildBadge[] = [
     description: 'تابعت القراءة لعدة أيام متواصلة بنشاط وعزيمة',
     category: 'streak',
     iconEmoji: '🔥',
-    criteriaDescription: 'المواظبة على القراءة اليومية',
+    criteriaDescription: 'المواظبة على القراءة لـ ٣ أيام متتالية',
     points: 40,
     level: 'silver',
     targetCount: 3
+  },
+  {
+    id: 'seven_days_streak',
+    title: 'بطل الأسبوع القرآني',
+    description: 'حافظت على شعلة الحماس والمواظبة لمدة ٧ أيام متتالية دون انقطاع',
+    category: 'streak',
+    iconEmoji: '⚡',
+    criteriaDescription: 'المواظبة على القراءة لـ ٧ أيام متتالية',
+    points: 70,
+    level: 'gold',
+    targetCount: 7
+  },
+  {
+    id: 'first_coloring',
+    title: 'فنان النور الصغير',
+    description: 'أتممت تلوين أول لوحة رمزية من قصص الأنبياء',
+    category: 'explorer',
+    iconEmoji: '🎨',
+    criteriaDescription: 'تلوين لوحة واحدة وحفظها',
+    points: 30,
+    level: 'bronze',
+    targetCount: 1
   }
 ];
 
@@ -125,9 +147,12 @@ export function loadAchievementsState(): UserAchievementsState {
         completedQuizScores: parsed.completedQuizScores || {},
         unlockedBadgeIds: Array.isArray(parsed.unlockedBadgeIds) ? parsed.unlockedBadgeIds : [],
         badgeUnlockDates: parsed.badgeUnlockDates || {},
+        savedColoringWorks: Array.isArray(parsed.savedColoringWorks) ? parsed.savedColoringWorks : [],
         totalStars: typeof parsed.totalStars === 'number' ? parsed.totalStars : 0,
         readingStreakDays: typeof parsed.readingStreakDays === 'number' ? parsed.readingStreakDays : 1,
-        lastActiveDate: parsed.lastActiveDate || new Date().toISOString().split('T')[0]
+        lastActiveDate: parsed.lastActiveDate || new Date().toISOString().split('T')[0],
+        completedChallengeDates: Array.isArray(parsed.completedChallengeDates) ? parsed.completedChallengeDates : [],
+        lastDailyChallengeCompletedAt: parsed.lastDailyChallengeCompletedAt || ''
       };
     }
   } catch (e) {
@@ -139,9 +164,12 @@ export function loadAchievementsState(): UserAchievementsState {
     completedQuizScores: {},
     unlockedBadgeIds: [],
     badgeUnlockDates: {},
+    savedColoringWorks: [],
     totalStars: 0,
     readingStreakDays: 1,
-    lastActiveDate: new Date().toISOString().split('T')[0]
+    lastActiveDate: new Date().toISOString().split('T')[0],
+    completedChallengeDates: [],
+    lastDailyChallengeCompletedAt: ''
   };
 }
 
@@ -167,6 +195,7 @@ export function evaluateAchievements(
     justCompletedStoryId?: string;
     justCompletedQuiz?: { prophetId: string; score: number; total: number };
     openedSourceVerification?: boolean;
+    completedColoringWorkId?: string;
   }
 ): AchievementEvaluationResult {
   const updatedState: UserAchievementsState = {
@@ -174,7 +203,8 @@ export function evaluateAchievements(
     completedStoryIds: [...currentState.completedStoryIds],
     completedQuizScores: { ...currentState.completedQuizScores },
     unlockedBadgeIds: [...currentState.unlockedBadgeIds],
-    badgeUnlockDates: { ...currentState.badgeUnlockDates }
+    badgeUnlockDates: { ...currentState.badgeUnlockDates },
+    savedColoringWorks: [...currentState.savedColoringWorks]
   };
 
   // 1. Process Story Completion
@@ -232,6 +262,19 @@ export function evaluateAchievements(
     unlockBadge('deep_explorer');
   }
 
+  // Coloring badge
+  if (updatedState.savedColoringWorks.length >= 1) {
+    unlockBadge('first_coloring');
+  }
+
+  // Streak badges
+  if (updatedState.readingStreakDays >= 3) {
+    unlockBadge('three_days_streak');
+  }
+  if (updatedState.readingStreakDays >= 7) {
+    unlockBadge('seven_days_streak');
+  }
+
   // Recalculate total stars from scratch if needed to ensure consistency
   let calculatedStars = 0;
   INITIAL_BADGES.forEach(b => {
@@ -239,9 +282,11 @@ export function evaluateAchievements(
       calculatedStars += b.points;
     }
   });
-  // Add base points: +15 for each completed story, +10 for each quiz
+  // Add base points: +15 for each completed story, +10 for each quiz, +30 for each daily challenge
   calculatedStars += storiesCount * 15;
   calculatedStars += Object.values(updatedState.completedQuizScores).reduce((acc, q) => acc + q.score * 5, 0);
+  const challengeCount = (updatedState.completedChallengeDates || []).length;
+  calculatedStars += challengeCount * 30;
   updatedState.totalStars = calculatedStars;
 
   saveAchievementsState(updatedState);
@@ -249,5 +294,60 @@ export function evaluateAchievements(
   return {
     newState: updatedState,
     newlyUnlockedBadges: newlyUnlocked
+  };
+}
+
+/**
+ * Marks today's daily challenge as completed, increments or maintains streak,
+ * awards bonus stars and unlocks any eligible streak badges.
+ */
+export function recordDailyChallengeCompletion(
+  currentState: UserAchievementsState,
+  bonusStars: number = 30
+): {
+  newState: UserAchievementsState;
+  newlyUnlockedBadges: ChildBadge[];
+  earnedStars: number;
+  isAlreadyCompletedToday: boolean;
+} {
+  const todayStr = new Date().toISOString().split('T')[0];
+  const completedDates = currentState.completedChallengeDates || [];
+  const isAlreadyCompletedToday = completedDates.includes(todayStr);
+
+  let streak = currentState.readingStreakDays || 0;
+  const lastActive = currentState.lastActiveDate || todayStr;
+
+  if (!isAlreadyCompletedToday) {
+    const todayMs = new Date(todayStr + 'T00:00:00').getTime();
+    const lastMs = new Date(lastActive + 'T00:00:00').getTime();
+    const diffDays = Math.round((todayMs - lastMs) / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 1) {
+      streak += 1;
+    } else if (diffDays === 0) {
+      streak = Math.max(1, streak);
+    } else {
+      streak = 1;
+    }
+  }
+
+  const updatedDates = isAlreadyCompletedToday ? completedDates : [...completedDates, todayStr];
+  const starsEarned = isAlreadyCompletedToday ? 0 : bonusStars;
+
+  const intermediateState: UserAchievementsState = {
+    ...currentState,
+    readingStreakDays: Math.max(1, streak),
+    lastActiveDate: todayStr,
+    completedChallengeDates: updatedDates,
+    lastDailyChallengeCompletedAt: new Date().toISOString()
+  };
+
+  const { newState, newlyUnlockedBadges } = evaluateAchievements(intermediateState);
+
+  return {
+    newState,
+    newlyUnlockedBadges,
+    earnedStars: starsEarned,
+    isAlreadyCompletedToday
   };
 }
