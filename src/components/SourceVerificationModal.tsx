@@ -93,11 +93,23 @@ export const SourceVerificationModal: React.FC<SourceVerificationModalProps> = (
             <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-slate-500">اسم المرجع / الكتاب:</span>
-                {source.authenticityDegree && (
-                  <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">
-                    {source.authenticityDegree}
-                  </span>
-                )}
+                <div className="flex gap-1.5">
+                  {source.evidenceLevel && (
+                    <span className="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 text-[10px] font-bold">
+                      {source.evidenceLevel}
+                    </span>
+                  )}
+                  {source.verificationStatus && (
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                      {source.verificationStatus}
+                    </span>
+                  )}
+                  {source.authenticityDegree && !source.verificationStatus && (
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                      {source.authenticityDegree}
+                    </span>
+                  )}
+                </div>
               </div>
               <p className="text-base font-bold text-slate-800">
                 {source.title}
@@ -106,6 +118,11 @@ export const SourceVerificationModal: React.FC<SourceVerificationModalProps> = (
                 <strong className="text-slate-800 block mb-1">بيان الموضع والتخريج:</strong>
                 {source.referenceDetails}
               </div>
+              {source.textSnippet && (
+                <div className="text-xs text-slate-500 italic bg-slate-100/50 p-3 rounded-xl border-r-4 border-slate-300">
+                  "{source.textSnippet}"
+                </div>
+              )}
             </div>
           )}
 

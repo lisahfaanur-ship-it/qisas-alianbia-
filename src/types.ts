@@ -21,6 +21,7 @@ export interface QuranicVerse {
   ayahNumber: string;
   text: string;
   explanation?: string;
+  audioUrl?: string;
 }
 
 export interface StoryChapter {
@@ -28,6 +29,7 @@ export interface StoryChapter {
   title: string;
   subtitle: string;
   text: string;
+  audioUrl?: string;
   symbolicIllustration: {
     theme: 'garden' | 'ark' | 'mountain' | 'stars' | 'desert' | 'water' | 'nature';
     caption: string;

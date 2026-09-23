@@ -17,7 +17,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateTab }) => {
                 🌙
               </div>
               <div>
-                <h3 className="text-lg font-black text-white">قصص الأنبياء للأطفال</h3>
+                <h3 className="text-lg font-black text-white">نور الأنبياء</h3>
                 <p className="text-xs text-slate-400">منصة تعليمية إسلامية موثقة وآمنة</p>
               </div>
             </div>

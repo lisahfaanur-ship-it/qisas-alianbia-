@@ -95,10 +95,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div>
               <div className="flex items-center gap-1.5">
                 <span className="text-lg font-black tracking-tight text-slate-900">
-                  قصص الأنبياء
+                  نور الأنبياء
                 </span>
                 <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold">
-                  للأطفال
+                  تفاعلي
                 </span>
               </div>
               <p className="text-[11px] text-slate-500 font-medium">

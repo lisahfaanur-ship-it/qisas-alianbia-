@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   BookOpen,
   Headphones,
@@ -22,7 +22,10 @@ import {
   MessageSquare,
   Mic,
   Send,
-  PenTool
+  PenTool,
+  Play,
+  Pause,
+  Volume2
 } from 'lucide-react';
 import { ProphetStory, AgeGroup, SourceReference, QuranicVerse } from '../types';
 import { SymbolicArt } from './SymbolicArt';
@@ -68,6 +71,45 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
 
   // Reading Style & Child Eye-Care Preferences
   const [isReadingPrefsOpen, setIsReadingPrefsOpen] = useState(false);
+  const [playingAudioUrl, setPlayingAudioUrl] = useState<string | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+    setPlayingAudioUrl(null);
+  }, [activeChapterIndex, selectedAge, prophet.id]);
+
+  const toggleAudio = (url: string) => {
+    if (playingAudioUrl === url) {
+      if (audioRef.current) {
+        if (audioRef.current.paused) {
+          audioRef.current.play();
+        } else {
+          audioRef.current.pause();
+        }
+        // Force re-render to update icon
+        const currentUrl = url;
+        setPlayingAudioUrl(null);
+        setTimeout(() => setPlayingAudioUrl(currentUrl), 10);
+      }
+    } else {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+      const audio = new Audio(url);
+      audioRef.current = audio;
+      audio.play();
+      setPlayingAudioUrl(url);
+      audio.onended = () => setPlayingAudioUrl(null);
+    }
+  };
+
+  const isAudioPlaying = (url: string) => {
+    return playingAudioUrl === url && audioRef.current && !audioRef.current.paused;
+  };
   const [fontSize, setFontSize] = useState<TextFontSize>(() => {
     return (localStorage.getItem('prophet_story_font_size') as TextFontSize) || 'md';
   });
@@ -629,13 +671,34 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
                             <span className="text-xs font-bold text-amber-900 bg-amber-200/80 px-2.5 py-1 rounded-md">
                               شاهد قرآني — سورة {chap.associatedAyah.surah} ({chap.associatedAyah.ayahNumber})
                             </span>
-                            <button
-                              type="button"
-                              onClick={() => handleOpenSource(undefined, chap.associatedAyah)}
-                              className="text-xs text-emerald-800 hover:text-emerald-950 font-bold underline flex items-center gap-1"
-                            >
-                              <span>🔎 التحقق من المصدر</span>
-                            </button>
+                            <div className="flex items-center gap-3">
+                              {chap.associatedAyah.audioUrl && (
+                                <button
+                                  type="button"
+                                  onClick={() => toggleAudio(chap.associatedAyah!.audioUrl!)}
+                                  className={`p-1.5 rounded-full transition-all flex items-center gap-1.5 ${
+                                    isAudioPlaying(chap.associatedAyah.audioUrl) 
+                                      ? 'bg-amber-400 text-slate-900 scale-110' 
+                                      : 'bg-white hover:bg-amber-100 text-amber-700'
+                                  }`}
+                                  title="استمع لتلاوة الآية"
+                                >
+                                  {isAudioPlaying(chap.associatedAyah.audioUrl) ? (
+                                    <Pause className="w-3.5 h-3.5" />
+                                  ) : (
+                                    <Volume2 className="w-3.5 h-3.5" />
+                                  )}
+                                  <span className="text-[10px] font-bold">تلاوة</span>
+                                </button>
+                              )}
+                              <button
+                                type="button"
+                                onClick={() => handleOpenSource(undefined, chap.associatedAyah)}
+                                className="text-xs text-emerald-800 hover:text-emerald-950 font-bold underline flex items-center gap-1"
+                              >
+                                <span>🔎 التحقق من المصدر</span>
+                              </button>
+                            </div>
                           </div>
                           <p className="text-lg font-['Amiri',serif] leading-relaxed text-slate-900 py-2">
                             « {chap.associatedAyah.text} »
@@ -647,6 +710,45 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
                           )}
                         </div>
                       )}
+
+                      {chap.associatedHadith && (
+                        <div className="p-5 rounded-2xl bg-blue-50/80 border border-blue-300/80 shadow-sm relative overflow-hidden">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-xs font-bold text-blue-900 bg-blue-200/80 px-2.5 py-1 rounded-md">
+                              حديث شريف — {chap.associatedHadith.source}
+                            </span>
+                          </div>
+                          <p className="text-lg font-['Amiri',serif] leading-relaxed text-slate-900 py-2">
+                            « {chap.associatedHadith.text} »
+                          </p>
+                          <div className="flex items-center justify-between mt-2 pt-2 border-t border-blue-200">
+                             <span className="text-[10px] text-blue-700 font-bold">المصدر: {chap.associatedHadith.reference}</span>
+                             {chap.associatedHadith.grade && (
+                               <span className="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-bold">
+                                 درجة الحديث: {chap.associatedHadith.grade}
+                               </span>
+                             )}
+                          </div>
+                        </div>
+                      )}
+
+                      {chap.chapterSources && chap.chapterSources.length > 0 && (
+                        <div className="pt-2 px-1">
+                          <h5 className="text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-wider">مراجع الفصل:</h5>
+                          <div className="flex flex-wrap gap-2">
+                            {chap.chapterSources.map(s => (
+                              <button
+                                key={s.id}
+                                onClick={() => handleOpenSource(s)}
+                                className="text-[10px] bg-white border border-slate-200 px-2 py-1 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1"
+                              >
+                                <BookCheck className="w-3 h-3 text-emerald-600" />
+                                <span>{s.title}</span>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
 
                     {/* Chapter Text & Narrative */}
@@ -655,8 +757,27 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
                         <div className="inline-block px-3 py-1 rounded-lg bg-emerald-100 text-emerald-900 text-xs font-bold mb-2">
                           {chap.subtitle}
                         </div>
-                        <h3 className="text-2xl sm:text-3xl font-black text-slate-900">
-                          {chap.title}
+                        <h3 className="text-2xl sm:text-3xl font-black text-slate-900 flex items-center gap-4">
+                          <span>{chap.title}</span>
+                          {chap.audioUrl && (
+                            <button
+                              type="button"
+                              onClick={() => toggleAudio(chap.audioUrl!)}
+                              className={`p-2 rounded-2xl transition-all flex items-center gap-2 ${
+                                isAudioPlaying(chap.audioUrl) 
+                                  ? 'bg-emerald-600 text-white shadow-md scale-105' 
+                                  : 'bg-emerald-100 hover:bg-emerald-200 text-emerald-700'
+                              }`}
+                              title="استمع لسرد الفصل"
+                            >
+                              {isAudioPlaying(chap.audioUrl) ? (
+                                <Pause className="w-5 h-5" />
+                              ) : (
+                                <Play className="w-5 h-5" />
+                              )}
+                              <span className="text-xs font-bold">استماع للسرد</span>
+                            </button>
+                          )}
                         </h3>
                       </div>
 
@@ -669,6 +790,18 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
                           vocabulary={prophet.vocabulary || []}
                           prophetName={prophet.name}
                         />
+
+                        {chap.detailedExplanation && (
+                          <div className="p-4 bg-amber-50/50 rounded-2xl border border-amber-100 mt-4">
+                            <h4 className="text-xs font-bold text-amber-900 mb-1 flex items-center gap-1.5">
+                              <Lightbulb className="w-3.5 h-3.5" />
+                              توسع في المعنى (للمتقدمين)
+                            </h4>
+                            <p className="text-xs text-slate-600 leading-relaxed">
+                              {chap.detailedExplanation}
+                            </p>
+                          </div>
+                        )}
                       </div>
 
                       {/* Chapter Progress Milestone Card for Children */}
@@ -736,13 +869,34 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
                     <span className="text-xs font-bold text-amber-900 bg-amber-200/80 px-2.5 py-1 rounded-md">
                       شاهد قرآني — سورة {currentChapter.associatedAyah.surah} ({currentChapter.associatedAyah.ayahNumber})
                     </span>
-                    <button
-                      type="button"
-                      onClick={() => handleOpenSource(undefined, currentChapter.associatedAyah)}
-                      className="text-xs text-emerald-800 hover:text-emerald-950 font-bold underline flex items-center gap-1"
-                    >
-                      <span>🔎 التحقق من المصدر</span>
-                    </button>
+                    <div className="flex items-center gap-3">
+                      {currentChapter.associatedAyah.audioUrl && (
+                        <button
+                          type="button"
+                          onClick={() => toggleAudio(currentChapter.associatedAyah!.audioUrl!)}
+                          className={`p-1.5 rounded-full transition-all flex items-center gap-1.5 ${
+                            isAudioPlaying(currentChapter.associatedAyah.audioUrl) 
+                              ? 'bg-amber-400 text-slate-900 scale-110' 
+                              : 'bg-white hover:bg-amber-100 text-amber-700'
+                          }`}
+                          title="استمع لتلاوة الآية"
+                        >
+                          {isAudioPlaying(currentChapter.associatedAyah.audioUrl) ? (
+                            <Pause className="w-3.5 h-3.5" />
+                          ) : (
+                            <Volume2 className="w-3.5 h-3.5" />
+                          )}
+                          <span className="text-[10px] font-bold">تلاوة</span>
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => handleOpenSource(undefined, currentChapter.associatedAyah)}
+                        className="text-xs text-emerald-800 hover:text-emerald-950 font-bold underline flex items-center gap-1"
+                      >
+                        <span>🔎 التحقق من المصدر</span>
+                      </button>
+                    </div>
                   </div>
                   <p className="text-lg font-['Amiri',serif] leading-relaxed text-slate-900 py-2">
                     « {currentChapter.associatedAyah.text} »
@@ -754,6 +908,45 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
                   )}
                 </div>
               )}
+
+              {currentChapter.associatedHadith && (
+                <div className="p-5 rounded-2xl bg-blue-50/80 border border-blue-300/80 shadow-sm relative overflow-hidden">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-bold text-blue-900 bg-blue-200/80 px-2.5 py-1 rounded-md">
+                      حديث شريف — {currentChapter.associatedHadith.source}
+                    </span>
+                  </div>
+                  <p className="text-lg font-['Amiri',serif] leading-relaxed text-slate-900 py-2">
+                    « {currentChapter.associatedHadith.text} »
+                  </p>
+                  <div className="flex items-center justify-between mt-2 pt-2 border-t border-blue-200">
+                     <span className="text-[10px] text-blue-700 font-bold">المصدر: {currentChapter.associatedHadith.reference}</span>
+                     {currentChapter.associatedHadith.grade && (
+                       <span className="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-bold">
+                         درجة الحديث: {currentChapter.associatedHadith.grade}
+                       </span>
+                     )}
+                  </div>
+                </div>
+              )}
+
+              {currentChapter.chapterSources && currentChapter.chapterSources.length > 0 && (
+                <div className="pt-2 px-1">
+                  <h5 className="text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-wider">مراجع الفصل:</h5>
+                  <div className="flex flex-wrap gap-2">
+                    {currentChapter.chapterSources.map(s => (
+                      <button
+                        key={s.id}
+                        onClick={() => handleOpenSource(s)}
+                        className="text-[10px] bg-white border border-slate-200 px-2 py-1 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1"
+                      >
+                        <BookCheck className="w-3 h-3 text-emerald-600" />
+                        <span>{s.title}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Chapter Text & Narrative */}
@@ -762,8 +955,27 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
                 <div className="inline-block px-3 py-1 rounded-lg bg-emerald-100 text-emerald-900 text-xs font-bold mb-2">
                   {currentChapter.subtitle}
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-black text-slate-900">
-                  {currentChapter.title}
+                <h3 className="text-2xl sm:text-3xl font-black text-slate-900 flex items-center gap-4">
+                  <span>{currentChapter.title}</span>
+                  {currentChapter.audioUrl && (
+                    <button
+                      type="button"
+                      onClick={() => toggleAudio(currentChapter.audioUrl!)}
+                      className={`p-2 rounded-2xl transition-all flex items-center gap-2 ${
+                        isAudioPlaying(currentChapter.audioUrl) 
+                          ? 'bg-emerald-600 text-white shadow-md scale-105' 
+                          : 'bg-emerald-100 hover:bg-emerald-200 text-emerald-700'
+                      }`}
+                      title="استمع لسرد الفصل"
+                    >
+                      {isAudioPlaying(currentChapter.audioUrl) ? (
+                        <Pause className="w-5 h-5" />
+                      ) : (
+                        <Play className="w-5 h-5" />
+                      )}
+                      <span className="text-xs font-bold">استماع للسرد</span>
+                    </button>
+                  )}
                 </h3>
               </div>
 
@@ -776,6 +988,18 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
                   vocabulary={prophet.vocabulary || []}
                   prophetName={prophet.name}
                 />
+
+                {currentChapter.detailedExplanation && (
+                  <div className="p-4 bg-amber-50/50 rounded-2xl border border-amber-100 mt-4">
+                    <h4 className="text-xs font-bold text-amber-900 mb-1 flex items-center gap-1.5">
+                      <Lightbulb className="w-3.5 h-3.5" />
+                      توسع في المعنى (للمتقدمين)
+                    </h4>
+                    <p className="text-xs text-slate-600 leading-relaxed">
+                      {currentChapter.detailedExplanation}
+                    </p>
+                  </div>
+                )}
               </div>
 
               {/* Chapter Navigation Buttons */}

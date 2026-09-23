@@ -39,8 +39,10 @@ export const idrisStory: ProphetStory = {
             surah: 'العلق',
             ayahNumber: '٤-٥',
             text: 'الَّذِي عَلَّمَ بِالْقَلَمِ ۝ عَلَّمَ الْإِنسَانَ مَا لَمْ يَعْلَمْ',
-            explanation: 'فضل نعمة القلم والكتابة التي امتن الله بها على عباده.'
-          }
+            explanation: 'فضل نعمة القلم والكتابة التي امتن الله بها على عباده.',
+            audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
+          },
+          audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'
         },
         {
           id: 2,
@@ -169,7 +171,24 @@ export const idrisStory: ProphetStory = {
             ayahNumber: '٥٧',
             text: 'وَرَفَعْنَاهُ مَكَانًا عَلِيًّا',
             explanation: 'تفسير ابن كثير والطبري: رفعه الله إلى السماء الرابعة كما في حديث الإسراء الصحيح.'
-          }
+          },
+          associatedHadith: {
+            text: 'فَمَرَرْتُ بِإِدْرِيسَ فَقَالَ: مَرْحَبًا بِالأَخِ الصَّالِحِ وَالنَّبِيِّ الصَّالِحِ. قُلْتُ: مَنْ هَذَا؟ قَالَ: هَذَا إِدْرِيسُ (في السماء الرابعة)',
+            source: 'صحيح البخاري ومسلم',
+            grade: 'صحيح متفق عليه',
+            reference: 'حديث الإسراء والمعراج'
+          },
+          detailedExplanation: 'الرفع المذكور في القرآن الكريم "ورفعناه مكاناً علياً" فسره جمهور المفسرين بالرفع الحسي إلى السماء الرابعة، وهو ما أكده النبي ﷺ في حديث المعراج الصحيح. أما ما يروى من قصص حول محاولة الفرار من ملك الموت فهي إسرائيليات تتنافى مع مقام النبوة ويجب الحذر منها.',
+          chapterSources: [
+            {
+              id: 'cs1',
+              title: 'البداية والنهاية لابن كثير',
+              type: 'tafsir',
+              referenceDetails: 'ج ١، ص ٣٤٢ - ذكر قصة إدريس عليه السلام وتفنيد الروايات الضعيفة',
+              evidenceLevel: 'Commentary',
+              verificationStatus: 'Reviewed'
+            }
+          ]
         }
       ]
     }
@@ -195,10 +214,38 @@ export const idrisStory: ProphetStory = {
     }
   ],
   sources: [
-    { id: 's1', title: 'القرآن الكريم', type: 'quran', referenceDetails: 'سورة مريم (الآيات ٥٦-٥٧)، سورة الأنبياء (الآيات ٨٥-٨٦)' },
-    { id: 's2', title: 'صحيح البخاري', type: 'hadith', referenceDetails: 'كتاب مناقب الأنصار — باب المعراج، وكتاب أحاديث الأنبياء (حديث رقم ٣٤٩)' },
-    { id: 's3', title: 'صحيح مسلم', type: 'hadith', referenceDetails: 'كتاب الإيمان — باب الإسراء برسول الله ﷺ وفرض الصلوات (حديث رقم ١٦٢)' },
-    { id: 's4', title: 'البداية والنهاية', type: 'scholarly_reference', referenceDetails: 'الحافظ ابن كثير — باب قصة إدريس عليه السلام' }
+    { 
+      id: 's1', 
+      title: 'القرآن الكريم', 
+      type: 'quran', 
+      referenceDetails: 'سورة مريم (الآيات ٥٦-٥٧)، سورة الأنبياء (الآيات ٨٥-٨٦)',
+      evidenceLevel: 'Primary',
+      verificationStatus: 'Verified'
+    },
+    { 
+      id: 's2', 
+      title: 'صحيح البخاري', 
+      type: 'hadith', 
+      referenceDetails: 'كتاب مناقب الأنصار — باب المعراج، وكتاب أحاديث الأنبياء (حديث رقم ٣٤٩)',
+      evidenceLevel: 'Primary',
+      verificationStatus: 'Verified'
+    },
+    { 
+      id: 's3', 
+      title: 'صحيح مسلم', 
+      type: 'hadith', 
+      referenceDetails: 'كتاب الإيمان — باب الإسراء برسول الله ﷺ وفرض الصلوات (حديث رقم ١٦٢)',
+      evidenceLevel: 'Primary',
+      verificationStatus: 'Verified'
+    },
+    { 
+      id: 's4', 
+      title: 'البداية والنهاية لابن كثير', 
+      type: 'tafsir', 
+      referenceDetails: 'ذكر قصة إدريس عليه السلام، المجلد الأول',
+      evidenceLevel: 'Secondary',
+      verificationStatus: 'Verified'
+    }
   ],
   quiz: [
     {

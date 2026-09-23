@@ -6,9 +6,13 @@ import {
   Square,
   Plus,
   CheckCircle2,
-  Clock
+  Clock,
+  Mic,
+  Music,
+  ChevronDown,
+  Volume2
 } from 'lucide-react';
-import { ProphetStory, StoryStatus, ReviewChecklist } from '../../../types';
+import { ProphetStory, StoryStatus, ReviewChecklist, AgeGroup } from '../../../types';
 
 interface ContentManagementProps {
   prophets: ProphetStory[];
@@ -23,6 +27,7 @@ export const ContentManagement: React.FC<ContentManagementProps> = ({
 }) => {
   const [selectedProphetId, setSelectedProphetId] = useState<string>(prophets[0]?.id || 'adam');
   const [notification, setNotification] = useState<string | null>(null);
+  const [editingAge, setEditingAge] = useState<AgeGroup>('8-10');
 
   const currentProphet = prophets.find(p => p.id === selectedProphetId) || prophets[0];
 
@@ -101,6 +106,28 @@ export const ContentManagement: React.FC<ContentManagementProps> = ({
     };
     onUpdateProphet(updatedProphet);
     showNotice(`تم تغيير حالة القصة إلى: ${getStatusLabel(newStatus)}`);
+  };
+
+  const handleUpdateAudioUrl = (chapterIndex: number, url: string, isVerse: boolean = false) => {
+    const updatedProphet = { ...currentProphet };
+    const chapters = [...updatedProphet.ageVariants[editingAge].chapters];
+    
+    if (isVerse) {
+      if (chapters[chapterIndex].associatedAyah) {
+        chapters[chapterIndex].associatedAyah = {
+          ...chapters[chapterIndex].associatedAyah!,
+          audioUrl: url
+        };
+      }
+    } else {
+      chapters[chapterIndex] = {
+        ...chapters[chapterIndex],
+        audioUrl: url
+      };
+    }
+    
+    updatedProphet.ageVariants[editingAge].chapters = chapters;
+    onUpdateProphet(updatedProphet);
   };
 
   const showNotice = (msg: string) => {
@@ -245,6 +272,87 @@ export const ContentManagement: React.FC<ContentManagementProps> = ({
               >
                 طلب تصحيح
               </button>
+            </div>
+          </div>
+
+          {/* Audio Content Editor */}
+          <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-6">
+            <div className="flex items-center justify-between border-b pb-4">
+              <div className="flex items-center gap-2">
+                <div className="p-2 rounded-lg bg-amber-100 text-amber-700">
+                  <Mic className="w-5 h-5" />
+                </div>
+                <h3 className="text-sm font-bold text-slate-900">إدارة الملفات الصوتية والتلاوات</h3>
+              </div>
+              
+              <div className="flex gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200">
+                {(['5-7', '8-10', '11-13'] as AgeGroup[]).map(age => (
+                  <button
+                    key={age}
+                    onClick={() => setEditingAge(age)}
+                    className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all ${
+                      editingAge === age ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'
+                    }`}
+                  >
+                    {age}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <p className="text-[11px] text-slate-500 bg-slate-50 p-3 rounded-xl border-r-4 border-amber-400">
+                يمكنك هنا إضافة روابط الملفات الصوتية (MP3) لكل فصل من فصول القصة، بالإضافة إلى روابط التلاوة الخاصة بالآيات القرآنية المرتبطة بكل فصل.
+              </p>
+
+              <div className="space-y-6">
+                {currentProphet.ageVariants[editingAge].chapters.map((chap, idx) => (
+                  <div key={`${editingAge}-${chap.id}-${idx}`} className="p-4 rounded-2xl border border-slate-100 bg-white shadow-sm space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="w-6 h-6 rounded-full bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold">
+                          {idx + 1}
+                        </span>
+                        <h4 className="text-xs font-black text-slate-800">{chap.title}</h4>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {/* Chapter Narration Audio */}
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-bold text-slate-600 flex items-center gap-1">
+                          <Volume2 className="w-3 h-3" />
+                          رابط صوت السرد (فصل {idx + 1}):
+                        </label>
+                        <input
+                          type="url"
+                          placeholder="https://example.com/audio.mp3"
+                          value={chap.audioUrl || ''}
+                          onChange={(e) => handleUpdateAudioUrl(idx, e.target.value, false)}
+                          className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-[11px] outline-none focus:ring-2 focus:ring-amber-400 transition-all"
+                        />
+                      </div>
+
+                      {/* Verse Recitation Audio */}
+                      {chap.associatedAyah && (
+                        <div className="space-y-1.5">
+                          <label className="text-[10px] font-bold text-emerald-700 flex items-center gap-1">
+                            <Music className="w-3 h-3" />
+                            رابط تلاوة الآية ({chap.associatedAyah.surah}):
+                          </label>
+                          <input
+                            type="url"
+                            placeholder="https://example.com/recitation.mp3"
+                            value={chap.associatedAyah.audioUrl || ''}
+                            onChange={(e) => handleUpdateAudioUrl(idx, e.target.value, true)}
+                            className="w-full px-3 py-2 rounded-xl bg-emerald-50 border border-emerald-100 text-[11px] outline-none focus:ring-2 focus:ring-emerald-400 transition-all"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
