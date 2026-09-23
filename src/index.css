@@ -1,1 +1,35 @@
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  font-family: 'Cairo', sans-serif;
+}
+
+/* Dark mode smooth scrollbar & selection */
+html.dark ::selection {
+  background-color: #d97706;
+  color: #ffffff;
+}
+
+/* Night-friendly calming ambient pulse */
+@keyframes night-glow {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.3; }
+}
+
+.night-glow {
+  animation: night-glow 4s ease-in-out infinite;
+}

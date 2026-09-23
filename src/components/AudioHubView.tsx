@@ -40,18 +40,18 @@ export const AudioHubView: React.FC<AudioHubViewProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Active Player Showcase */}
         <div className="lg:col-span-8 space-y-6">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-amber-200 shadow-sm space-y-6">
-            <div className="flex items-center justify-between flex-wrap gap-4 pb-4 border-b border-slate-100">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border-2 border-amber-200 dark:border-slate-800 shadow-sm space-y-6 transition-colors">
+            <div className="flex items-center justify-between flex-wrap gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
               <div>
-                <span className="text-xs font-bold text-emerald-700 block">
+                <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 block">
                   القصة المحددة حالياً للاستماع:
                 </span>
-                <h2 className="text-2xl font-black text-slate-900">
+                <h2 className="text-2xl font-black text-slate-900 dark:text-white">
                   {currentProphet.name} ({currentProphet.epithet})
                 </h2>
               </div>
-              <div className="flex items-center gap-2 text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-xl">
-                <Clock className="w-4 h-4 text-emerald-600" />
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-xl">
+                <Clock className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 <span>المدة التقريبية: ~{currentProphet.audioScript.estimatedMinutes} دقائق</span>
               </div>
             </div>
@@ -68,15 +68,15 @@ export const AudioHubView: React.FC<AudioHubViewProps> = ({
             />
 
             {/* Display the spoken script for following along */}
-            <div className="bg-amber-50/50 p-6 rounded-2xl border border-amber-200/80 space-y-3">
-              <div className="flex items-center justify-between text-xs font-bold text-amber-900">
+            <div className="bg-amber-50/50 dark:bg-slate-850 p-6 rounded-2xl border border-amber-200/80 dark:border-slate-700 space-y-3 transition-colors">
+              <div className="flex items-center justify-between text-xs font-bold text-amber-900 dark:text-amber-300">
                 <span>نص السرد الصوتي المعتمد (تابع بعينيك أثناء الاستماع):</span>
-                <span className="text-emerald-700 flex items-center gap-1">
+                <span className="text-emerald-700 dark:text-emerald-400 flex items-center gap-1">
                   <ShieldCheck className="w-3.5 h-3.5" />
                   مطابق للمصادر المعتمدة
                 </span>
               </div>
-              <p className="text-base sm:text-lg leading-loose text-slate-800 font-normal">
+              <p className="text-base sm:text-lg leading-loose text-slate-800 dark:text-slate-200 font-normal">
                 {currentProphet.audioScript.fullText}
               </p>
             </div>
@@ -95,8 +95,8 @@ export const AudioHubView: React.FC<AudioHubViewProps> = ({
 
         {/* Story Playlist Column */}
         <div className="lg:col-span-4 space-y-4">
-          <div className="bg-white rounded-3xl p-6 border-2 border-amber-200 shadow-sm space-y-4">
-            <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border-2 border-amber-200 dark:border-slate-800 shadow-sm space-y-4 transition-colors">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-amber-500" />
               <span>قائمة القصص الصوتية</span>
             </h3>
@@ -110,25 +110,25 @@ export const AudioHubView: React.FC<AudioHubViewProps> = ({
                     onClick={() => setSelectedProphetId(p.id)}
                     className={`w-full p-4 rounded-2xl border text-right transition-all flex items-center justify-between gap-3 ${
                       isSelected
-                        ? 'bg-emerald-50 border-emerald-500 shadow-sm'
-                        : 'bg-slate-50 border-slate-200 hover:bg-amber-50'
+                        ? 'bg-emerald-50 dark:bg-emerald-950/60 border-emerald-500 dark:border-emerald-600 shadow-sm'
+                        : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:bg-amber-50 dark:hover:bg-slate-750'
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       <div
                         className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm ${
-                          isSelected ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-700'
+                          isSelected ? 'bg-emerald-600 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'
                         }`}
                       >
                         {isSelected ? <Volume2 className="w-5 h-5" /> : '🎧'}
                       </div>
                       <div>
-                        <h4 className="text-sm font-bold text-slate-900">{p.name}</h4>
-                        <span className="text-[11px] text-slate-500 block">{p.epithet}</span>
+                        <h4 className="text-sm font-bold text-slate-900 dark:text-white">{p.name}</h4>
+                        <span className="text-[11px] text-slate-500 dark:text-slate-400 block">{p.epithet}</span>
                       </div>
                     </div>
 
-                    <span className="text-xs font-semibold text-emerald-700">
+                    <span className="text-xs font-semibold text-emerald-700 dark:text-emerald-400">
                       {p.audioScript.estimatedMinutes} د
                     </span>
                   </button>

@@ -115,7 +115,7 @@ export const StoryReadingProgress: React.FC<StoryReadingProgressProps> = ({
       className="sticky top-[58px] sm:top-[62px] z-30 transition-all duration-300 -mx-2 sm:mx-0 mb-6"
       dir="rtl"
     >
-      <div className="bg-white/95 backdrop-blur-md border-2 border-amber-300/80 shadow-md rounded-2xl overflow-hidden">
+      <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-2 border-amber-300/80 dark:border-slate-750 shadow-md rounded-2xl overflow-hidden transition-colors">
         {/* Main Sticky Bar */}
         <div className="p-3 sm:p-4 pb-2">
           <div className="flex items-center justify-between gap-3">
@@ -134,14 +134,14 @@ export const StoryReadingProgress: React.FC<StoryReadingProgressProps> = ({
 
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-xs sm:text-sm font-black text-slate-900 truncate">
+                  <span className="text-xs sm:text-sm font-black text-slate-900 dark:text-white truncate">
                     {encouragement.title}
                   </span>
-                  <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 text-[11px] font-extrabold border border-amber-300 shrink-0">
+                  <span className="px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-300 text-[11px] font-extrabold border border-amber-300 dark:border-amber-700 shrink-0">
                     {progressPercent}٪ مكتمل
                   </span>
                 </div>
-                <p className="text-[11px] sm:text-xs text-slate-500 hidden sm:block truncate mt-0.5">
+                <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 hidden sm:block truncate mt-0.5">
                   {encouragement.desc}
                 </p>
               </div>
@@ -157,10 +157,10 @@ export const StoryReadingProgress: React.FC<StoryReadingProgressProps> = ({
                   id="quick-night-mode-toggle-btn"
                   className={`p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl text-xs font-bold flex items-center gap-1 transition-all border ${
                     readingTheme === 'night'
-                      ? 'bg-slate-900 text-amber-300 border-indigo-400/50 shadow-sm ring-1 ring-indigo-400/30'
+                      ? 'bg-slate-900 dark:bg-slate-800 text-amber-300 border-indigo-400/50 shadow-sm ring-1 ring-indigo-400/30'
                       : readingTheme === 'sepia'
                       ? 'bg-amber-100 text-amber-900 border-amber-300'
-                      : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200'
+                      : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700'
                   }`}
                   title={readingTheme === 'night' ? 'تعطيل الوضع الليلي' : 'تفعيل الوضع الليلي لراحة العين'}
                   aria-label="تبديل الوضع الليلي"
@@ -182,11 +182,11 @@ export const StoryReadingProgress: React.FC<StoryReadingProgressProps> = ({
                   type="button"
                   onClick={onOpenPreferences}
                   id="open-reading-prefs-btn"
-                  className="p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-950 border border-amber-200 text-xs font-bold flex items-center gap-1 transition-colors"
+                  className="p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl bg-amber-50 dark:bg-slate-800 hover:bg-amber-100 dark:hover:bg-slate-700 text-amber-950 dark:text-amber-300 border border-amber-200 dark:border-slate-700 text-xs font-bold flex items-center gap-1 transition-colors"
                   title="تخصيص نمط القراءة وحجم الخط"
                   aria-label="تخصيص نمط القراءة وحجم الخط"
                 >
-                  <Type className="w-3.5 h-3.5 text-amber-700" />
+                  <Type className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
                   <span className="text-xs hidden sm:inline">تخصيص الخط</span>
                 </button>
               )}
@@ -196,7 +196,7 @@ export const StoryReadingProgress: React.FC<StoryReadingProgressProps> = ({
                 type="button"
                 onClick={onToggleReadingMode}
                 id="toggle-reading-mode-btn"
-                className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-bold transition-colors"
+                className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-slate-800 hover:bg-amber-100 dark:hover:bg-slate-700 text-amber-900 dark:text-amber-300 border border-amber-200 dark:border-slate-700 text-xs font-bold transition-colors"
                 title="التبديل بين التمرير المتتابع أو العرض بالصفحات"
               >
                 <span>{readingMode === 'continuous' ? '📜 قراءة متتابعة' : '📑 عرض صفحة بصفحة'}</span>
@@ -207,7 +207,7 @@ export const StoryReadingProgress: React.FC<StoryReadingProgressProps> = ({
                 type="button"
                 onClick={() => setIsExpanded(!isExpanded)}
                 id="expand-progress-details-btn"
-                className="p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl bg-slate-100 hover:bg-amber-100 text-slate-700 text-xs font-bold flex items-center gap-1 transition-colors"
+                className="p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-amber-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold flex items-center gap-1 transition-colors"
                 aria-label={isExpanded ? 'إخفاء تفاصيل الفصول' : 'عرض محطات الفصول'}
               >
                 <span className="text-xs hidden sm:inline">
@@ -221,7 +221,7 @@ export const StoryReadingProgress: React.FC<StoryReadingProgressProps> = ({
           {/* Visual Progress Bar Track */}
           <div className="mt-2.5 relative">
             <div
-              className="h-2 w-full bg-slate-100 rounded-full overflow-hidden p-0.5 border border-slate-200"
+              className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden p-0.5 border border-slate-200 dark:border-slate-700"
               role="progressbar"
               aria-valuenow={progressPercent}
               aria-valuemin={0}
@@ -241,24 +241,24 @@ export const StoryReadingProgress: React.FC<StoryReadingProgressProps> = ({
         {/* Floating Sub-Navigation Bar: Displays and Highlights Currently Visible Chapter Title */}
         <div
           id="floating-chapter-subnav"
-          className="bg-amber-50/70 border-t border-amber-200/80 px-3 py-2 sm:px-4"
+          className="bg-amber-50/70 dark:bg-slate-850 border-t border-amber-200/80 dark:border-slate-800 px-3 py-2 sm:px-4 transition-colors"
         >
           <div className="flex items-center justify-between gap-2 mb-1.5">
             <div className="flex items-center gap-1.5 min-w-0">
-              <Compass className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
-              <span className="text-[11px] font-bold text-slate-500 shrink-0">الفصل المعروض حالياً:</span>
-              <div className="flex items-center gap-1.5 bg-white px-2 py-0.5 rounded-lg border border-emerald-300 shadow-xs min-w-0">
+              <Compass className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400 shrink-0" />
+              <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 shrink-0">الفصل المعروض حالياً:</span>
+              <div className="flex items-center gap-1.5 bg-white dark:bg-slate-800 px-2 py-0.5 rounded-lg border border-emerald-300 dark:border-emerald-700 shadow-xs min-w-0">
                 <span className="relative flex h-2 w-2 shrink-0">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
                 </span>
-                <span className="text-xs font-black text-emerald-950 truncate max-w-[200px] sm:max-w-[320px]">
+                <span className="text-xs font-black text-emerald-950 dark:text-emerald-300 truncate max-w-[200px] sm:max-w-[320px]">
                   الفصل {activeChapterIndex + 1}: {currentChapterTitle}
                 </span>
               </div>
             </div>
 
-            <span className="text-[11px] text-emerald-800 font-extrabold bg-emerald-100/70 px-2 py-0.5 rounded-md border border-emerald-200 shrink-0">
+            <span className="text-[11px] text-emerald-800 dark:text-emerald-300 font-extrabold bg-emerald-100/70 dark:bg-emerald-950/60 px-2 py-0.5 rounded-md border border-emerald-200 dark:border-emerald-800 shrink-0">
               {activeChapterIndex + 1} / {totalChapters}
             </span>
           </div>
@@ -280,10 +280,10 @@ export const StoryReadingProgress: React.FC<StoryReadingProgressProps> = ({
                   onClick={() => onSelectChapter(idx)}
                   className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 shrink-0 select-none ${
                     isCurrent
-                      ? 'bg-emerald-600 text-white shadow-md border border-emerald-700 ring-2 ring-emerald-300 ring-offset-1 font-black scale-[1.02]'
+                      ? 'bg-emerald-600 text-white shadow-md border border-emerald-700 ring-2 ring-emerald-300 dark:ring-emerald-600 ring-offset-1 font-black scale-[1.02]'
                       : isChapCompleted
-                      ? 'bg-white hover:bg-emerald-50 text-emerald-900 border border-emerald-200'
-                      : 'bg-white/80 hover:bg-amber-100 text-slate-700 border border-slate-200'
+                      ? 'bg-white dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-slate-750 text-emerald-900 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800'
+                      : 'bg-white/80 dark:bg-slate-800/80 hover:bg-amber-100 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700'
                   }`}
                   title={`انتقل إلى الفصل ${idx + 1}: ${title}`}
                 >
@@ -293,9 +293,9 @@ export const StoryReadingProgress: React.FC<StoryReadingProgressProps> = ({
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-300"></span>
                     </span>
                   ) : isChapCompleted ? (
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                   ) : (
-                    <span className="w-4 h-4 rounded-full bg-slate-100 text-slate-600 text-[10px] font-bold flex items-center justify-center shrink-0">
+                    <span className="w-4 h-4 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-[10px] font-bold flex items-center justify-center shrink-0">
                       {idx + 1}
                     </span>
                   )}
@@ -310,12 +310,12 @@ export const StoryReadingProgress: React.FC<StoryReadingProgressProps> = ({
 
         {/* Expanded Drawer: Shows all chapter titles and quick-jump links */}
         {isExpanded && (
-          <div className="border-t border-amber-200/70 bg-amber-50/40 p-3 sm:p-4 animate-fade-in">
+          <div className="border-t border-amber-200/70 dark:border-slate-800 bg-amber-50/40 dark:bg-slate-900 p-3 sm:p-4 animate-fade-in transition-colors">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-bold text-slate-700">
+              <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
                 محطات القصة (اضغط للانتقال السريع):
               </span>
-              <span className="text-[11px] text-emerald-800 font-bold">
+              <span className="text-[11px] text-emerald-800 dark:text-emerald-300 font-bold">
                 أنجزت {completedChapters.length} من {totalChapters} فصول
               </span>
             </div>
@@ -334,10 +334,10 @@ export const StoryReadingProgress: React.FC<StoryReadingProgressProps> = ({
                     }}
                     className={`p-2.5 rounded-xl text-right text-xs transition-all flex items-center justify-between gap-2 border ${
                       isCurrent
-                        ? 'bg-amber-100 border-amber-300 text-slate-900 font-bold ring-1 ring-amber-300'
+                        ? 'bg-amber-100 dark:bg-amber-950/60 border-amber-300 dark:border-amber-700 text-slate-900 dark:text-amber-200 font-bold ring-1 ring-amber-300'
                         : isChapCompleted
-                        ? 'bg-emerald-50 border-emerald-200 text-emerald-900 font-medium hover:bg-emerald-100'
-                        : 'bg-white border-slate-200 text-slate-600 hover:bg-amber-50'
+                        ? 'bg-emerald-50 dark:bg-emerald-950/50 border-emerald-200 dark:border-emerald-800 text-emerald-900 dark:text-emerald-300 font-medium hover:bg-emerald-100 dark:hover:bg-emerald-900/60'
+                        : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-amber-50 dark:hover:bg-slate-750'
                     }`}
                   >
                     <div className="flex items-center gap-2 min-w-0">
@@ -347,7 +347,7 @@ export const StoryReadingProgress: React.FC<StoryReadingProgressProps> = ({
                             ? 'bg-emerald-600 text-white'
                             : isCurrent
                             ? 'bg-amber-500 text-slate-950'
-                            : 'bg-slate-200 text-slate-600'
+                            : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300'
                         }`}
                       >
                         {isChapCompleted ? '✓' : idx + 1}
@@ -355,7 +355,7 @@ export const StoryReadingProgress: React.FC<StoryReadingProgressProps> = ({
                       <span className="truncate">{title}</span>
                     </div>
                     {isCurrent && (
-                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-200 text-amber-900 font-bold shrink-0">
+                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-200 dark:bg-amber-900/80 text-amber-900 dark:text-amber-200 font-bold shrink-0">
                         تقرأ الآن
                       </span>
                     )}

@@ -84,19 +84,19 @@ export const QuizHubView: React.FC<QuizHubViewProps> = ({
       </div>
 
       {!isFinished ? (
-        <div className="bg-white rounded-3xl p-6 sm:p-10 border-2 border-amber-200 shadow-sm max-w-3xl mx-auto space-y-8">
+        <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border-2 border-amber-200 dark:border-slate-800 shadow-sm max-w-3xl mx-auto space-y-8 transition-colors">
           {/* Progress tracker */}
           <div className="space-y-2">
-            <div className="flex items-center justify-between text-xs font-bold text-slate-600">
-              <span className="flex items-center gap-1 text-emerald-800">
+            <div className="flex items-center justify-between text-xs font-bold text-slate-600 dark:text-slate-300">
+              <span className="flex items-center gap-1 text-emerald-800 dark:text-emerald-400">
                 <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                 السؤال {currentIdx + 1} من أصل {allQuestions.length}
               </span>
-              <span className="bg-amber-100 px-2.5 py-0.5 rounded-full text-amber-900 font-semibold">
+              <span className="bg-amber-100 dark:bg-amber-950/80 px-2.5 py-0.5 rounded-full text-amber-900 dark:text-amber-300 font-semibold">
                 عن: {currentItem.prophetName}
               </span>
             </div>
-            <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+            <div className="w-full h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
               <div
                 className="h-full bg-gradient-to-r from-amber-400 to-emerald-500 transition-all duration-300"
                 style={{ width: `${((currentIdx + 1) / allQuestions.length) * 100}%` }}
@@ -106,7 +106,7 @@ export const QuizHubView: React.FC<QuizHubViewProps> = ({
 
           {/* Question Text */}
           <div className="space-y-3">
-            <h2 className="text-xl sm:text-2xl font-black text-slate-900 leading-snug">
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white leading-snug">
               {currentItem.question.question}
             </h2>
           </div>
@@ -122,13 +122,13 @@ export const QuizHubView: React.FC<QuizHubViewProps> = ({
                   className={`w-full p-4 rounded-2xl border text-right text-sm font-semibold transition-all flex items-center justify-between gap-3 ${
                     isSelected
                       ? 'bg-amber-500 text-slate-950 border-amber-600 shadow-md font-bold'
-                      : 'bg-slate-50 border-slate-200 hover:bg-amber-50 hover:border-amber-300 text-slate-800'
+                      : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:bg-amber-50 dark:hover:bg-slate-750 text-slate-800 dark:text-slate-200'
                   }`}
                 >
                   <span>{option}</span>
                   <div
                     className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                      isSelected ? 'bg-slate-950 text-amber-400' : 'bg-white text-slate-400 border border-slate-300'
+                      isSelected ? 'bg-slate-950 text-amber-400' : 'bg-white dark:bg-slate-700 text-slate-400 dark:text-slate-300 border border-slate-300 dark:border-slate-600'
                     }`}
                   >
                     {oIdx + 1}
@@ -139,14 +139,14 @@ export const QuizHubView: React.FC<QuizHubViewProps> = ({
           </div>
 
           {/* Navigation Controls */}
-          <div className="flex items-center justify-between pt-6 border-t border-slate-100">
+          <div className="flex items-center justify-between pt-6 border-t border-slate-100 dark:border-slate-800">
             <button
               disabled={currentIdx === 0}
               onClick={handlePrev}
               className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all ${
                 currentIdx === 0
-                  ? 'bg-slate-100 text-slate-300 cursor-not-allowed'
-                  : 'bg-slate-200 hover:bg-slate-300 text-slate-700'
+                  ? 'bg-slate-100 dark:bg-slate-800 text-slate-300 dark:text-slate-600 cursor-not-allowed'
+                  : 'bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200'
               }`}
             >
               السابق
@@ -158,7 +158,7 @@ export const QuizHubView: React.FC<QuizHubViewProps> = ({
               className={`px-7 py-3 rounded-2xl text-xs sm:text-sm font-bold shadow-md transition-all ${
                 selectedAnswers[currentIdx] !== undefined
                   ? 'bg-emerald-600 hover:bg-emerald-700 text-white cursor-pointer active:scale-95'
-                  : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                  : 'bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-600 cursor-not-allowed'
               }`}
             >
               {currentIdx === allQuestions.length - 1 ? 'إنهاء المسابقة وعرض الشهادة' : 'السؤال التالي'}
@@ -167,32 +167,32 @@ export const QuizHubView: React.FC<QuizHubViewProps> = ({
         </div>
       ) : (
         /* Completion Certificate & Results */
-        <div className="max-w-2xl mx-auto bg-white rounded-3xl p-8 sm:p-12 border-4 border-amber-300 shadow-2xl text-center space-y-6 relative overflow-hidden">
-          <div className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-amber-100 opacity-60 pointer-events-none" />
-          <div className="absolute -bottom-12 -left-12 w-32 h-32 rounded-full bg-emerald-100 opacity-60 pointer-events-none" />
+        <div className="max-w-2xl mx-auto bg-white dark:bg-slate-900 rounded-3xl p-8 sm:p-12 border-4 border-amber-300 dark:border-amber-600 shadow-2xl text-center space-y-6 relative overflow-hidden transition-colors">
+          <div className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-amber-100 dark:bg-amber-950/40 opacity-60 pointer-events-none" />
+          <div className="absolute -bottom-12 -left-12 w-32 h-32 rounded-full bg-emerald-100 dark:bg-emerald-950/40 opacity-60 pointer-events-none" />
 
           <div className="w-20 h-20 mx-auto rounded-3xl bg-amber-400 text-slate-950 flex items-center justify-center shadow-lg shadow-amber-400/30">
             <Award className="w-10 h-10" />
           </div>
 
           <div>
-            <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full border border-emerald-300 inline-block mb-2">
+            <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-300 dark:border-emerald-700 inline-block mb-2">
               🎉 مبارك لك إتمام مسابقة الأنبياء
             </span>
-            <h2 className="text-3xl font-black text-slate-900">
+            <h2 className="text-3xl font-black text-slate-900 dark:text-white">
               وسام باحث قصص الأنبياء الصغير
             </h2>
-            <p className="text-slate-600 text-sm mt-1">
+            <p className="text-slate-600 dark:text-slate-300 text-sm mt-1">
               لقد أتممت الاختبار بنجاح محققاً نتيجة:
             </p>
-            <div className="text-4xl font-black text-emerald-600 mt-2">
+            <div className="text-4xl font-black text-emerald-600 dark:text-emerald-400 mt-2">
               {score} من {allQuestions.length}
             </div>
           </div>
 
           {/* Child's name on certificate */}
-          <div className="p-5 rounded-2xl bg-amber-50 border border-amber-200 max-w-md mx-auto space-y-2">
-            <label className="text-xs font-bold text-amber-900 block">
+          <div className="p-5 rounded-2xl bg-amber-50 dark:bg-slate-800 border border-amber-200 dark:border-slate-700 max-w-md mx-auto space-y-2">
+            <label className="text-xs font-bold text-amber-900 dark:text-amber-300 block">
               اكتب اسمك ليظهر على وسام الشرف:
             </label>
             <input
@@ -200,7 +200,7 @@ export const QuizHubView: React.FC<QuizHubViewProps> = ({
               value={learnerName}
               onChange={e => setLearnerName(e.target.value)}
               placeholder="مثال: عبد الرحمن / سارة"
-              className="w-full text-center px-4 py-2.5 rounded-xl bg-white border border-amber-300 font-bold text-slate-900 outline-none focus:ring-2 focus:ring-amber-400"
+              className="w-full text-center px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-amber-300 dark:border-slate-600 font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-amber-400"
             />
           </div>
 

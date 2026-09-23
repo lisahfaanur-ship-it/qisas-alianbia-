@@ -7,7 +7,7 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onNavigateTab }) => {
   return (
-    <footer className="bg-slate-900 text-slate-300 border-t border-slate-800 pt-12 pb-8" dir="rtl">
+    <footer className="bg-slate-900 dark:bg-slate-950 text-slate-300 border-t border-slate-800 dark:border-slate-850 pt-12 pb-8 transition-colors" dir="rtl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Col 1: Brand & Philosophy */}
@@ -102,7 +102,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateTab }) => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-slate-800 text-center text-xs text-slate-500 space-y-2">
+        <div className="pt-8 border-t border-slate-800 dark:border-slate-850 text-center text-xs text-slate-500 space-y-2">
           <p>
             قال رسول الله ﷺ: «خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ» — روى البخاري
           </p>

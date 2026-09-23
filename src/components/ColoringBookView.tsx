@@ -86,29 +86,29 @@ export const ColoringBookView: React.FC<ColoringBookViewProps> = ({
   if (!selectedPage) {
     return (
       <div className="space-y-8 pb-20 animate-fade-in" dir="rtl">
-        <div className="bg-white p-8 rounded-3xl border-2 border-emerald-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border-2 border-emerald-200 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 transition-colors">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-bold">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-900 dark:text-emerald-300 text-xs font-bold">
               <Palette className="w-4 h-4" />
               <span>كتيب التلوين الرقمي</span>
             </div>
-            <h1 className="text-3xl font-black text-slate-900">لون قصص الأنبياء 🎨</h1>
-            <p className="text-slate-600 font-medium">اختر مشهداً من قصص الأنبياء وعبّر عن إبداعك بالألوان الجميلة.</p>
+            <h1 className="text-3xl font-black text-slate-900 dark:text-white">لون قصص الأنبياء 🎨</h1>
+            <p className="text-slate-600 dark:text-slate-300 font-medium">اختر مشهداً من قصص الأنبياء وعبّر عن إبداعك بالألوان الجميلة.</p>
           </div>
-          <button onClick={onBack} className="px-6 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition-all">العودة للرئيسية</button>
+          <button onClick={onBack} className="px-6 py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold transition-all">العودة للرئيسية</button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {prophetsWithColoring.map(prophet => (
-            <div key={prophet.id} className="bg-white rounded-3xl border-2 border-slate-100 overflow-hidden hover:border-emerald-300 transition-all group">
+            <div key={prophet.id} className="bg-white dark:bg-slate-900 rounded-3xl border-2 border-slate-100 dark:border-slate-800 overflow-hidden hover:border-emerald-300 dark:hover:border-emerald-500 transition-all group">
               <div className="p-6 space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-2xl">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-slate-800 flex items-center justify-center text-2xl">
                     {prophet.id === 'adam' ? '🌳' : prophet.id === 'nuh' ? '🚢' : '🌟'}
                   </div>
                   <div>
-                    <h3 className="font-black text-slate-900">{prophet.name}</h3>
-                    <p className="text-xs text-slate-500">{prophet.epithet}</p>
+                    <h3 className="font-black text-slate-900 dark:text-white">{prophet.name}</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">{prophet.epithet}</p>
                   </div>
                 </div>
                 
@@ -120,11 +120,11 @@ export const ColoringBookView: React.FC<ColoringBookViewProps> = ({
                         setSelectedProphet(prophet);
                         setSelectedPage(page);
                       }}
-                      className="w-full flex items-center justify-between p-4 rounded-2xl bg-slate-50 hover:bg-emerald-50 text-right group/btn transition-all"
+                      className="w-full flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-slate-750 text-right group/btn transition-all"
                     >
                       <div className="flex items-center gap-3">
-                        <ImageIcon className="w-5 h-5 text-emerald-600" />
-                        <span className="font-bold text-slate-700">{page.title}</span>
+                        <ImageIcon className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                        <span className="font-bold text-slate-700 dark:text-slate-200">{page.title}</span>
                       </div>
                       <ArrowRight className="w-4 h-4 text-slate-400 group-hover/btn:translate-x-1 transition-transform rotate-180" />
                     </button>
@@ -141,7 +141,7 @@ export const ColoringBookView: React.FC<ColoringBookViewProps> = ({
   return (
     <div className="space-y-6 pb-20 animate-fade-in" dir="rtl">
       {/* Editor Header */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-white p-6 rounded-3xl border-2 border-emerald-200 shadow-sm">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-white dark:bg-slate-900 p-6 rounded-3xl border-2 border-emerald-200 dark:border-slate-800 shadow-sm transition-colors">
         <div className="flex items-center gap-4">
           <button 
             onClick={() => {
@@ -149,13 +149,13 @@ export const ColoringBookView: React.FC<ColoringBookViewProps> = ({
               setSvgData({});
               setHistory([]);
             }}
-            className="p-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 transition-all"
+            className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-all"
           >
             <ArrowRight className="w-5 h-5 rotate-180" />
           </button>
           <div>
-            <h2 className="text-xl font-black text-slate-900">{selectedPage.title}</h2>
-            <p className="text-xs text-slate-500 font-bold">تلوين مشهد من قصة {selectedProphet?.name}</p>
+            <h2 className="text-xl font-black text-slate-900 dark:text-white">{selectedPage.title}</h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-bold">تلوين مشهد من قصة {selectedProphet?.name}</p>
           </div>
         </div>
 
@@ -163,21 +163,21 @@ export const ColoringBookView: React.FC<ColoringBookViewProps> = ({
           <button
             onClick={handleUndo}
             disabled={history.length === 0}
-            className="p-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 disabled:opacity-30 transition-all"
+            className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 disabled:opacity-30 transition-all"
             title="تراجع"
           >
             <Undo className="w-5 h-5" />
           </button>
           <button
             onClick={handleReset}
-            className="p-3 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 transition-all"
+            className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/60 hover:bg-rose-100 dark:hover:bg-rose-900 text-rose-600 dark:text-rose-400 transition-all"
             title="مسح الكل"
           >
             <Trash2 className="w-5 h-5" />
           </button>
           <button
             onClick={handleSave}
-            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold transition-all"
+            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold transition-all shadow-md shadow-emerald-600/20"
           >
             <Save className="w-5 h-5" />
             <span>حفظ العمل</span>
@@ -188,9 +188,9 @@ export const ColoringBookView: React.FC<ColoringBookViewProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Tools & Palette */}
         <div className="lg:col-span-1 space-y-6">
-          <div className="bg-white p-6 rounded-3xl border-2 border-slate-100 shadow-sm space-y-4">
-            <h3 className="font-black text-slate-900 flex items-center gap-2">
-              <Palette className="w-5 h-5 text-emerald-600" />
+          <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border-2 border-slate-100 dark:border-slate-800 shadow-sm space-y-4 transition-colors">
+            <h3 className="font-black text-slate-900 dark:text-white flex items-center gap-2">
+              <Palette className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
               لوحة الألوان
             </h3>
             <div className="grid grid-cols-4 gap-3">
@@ -199,23 +199,23 @@ export const ColoringBookView: React.FC<ColoringBookViewProps> = ({
                   key={color}
                   onClick={() => setCurrentColor(color)}
                   className={`w-full aspect-square rounded-xl border-4 transition-all transform hover:scale-110 shadow-sm ${
-                    currentColor === color ? 'border-slate-900 scale-110 shadow-md' : 'border-transparent'
+                    currentColor === color ? 'border-slate-900 dark:border-white scale-110 shadow-md' : 'border-transparent'
                   }`}
                   style={{ backgroundColor: color }}
                 />
               ))}
             </div>
-            <div className="pt-4 border-t border-slate-100">
-              <div className="flex items-center gap-3 p-3 rounded-2xl bg-slate-50">
+            <div className="pt-4 border-t border-slate-100 dark:border-slate-800">
+              <div className="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 dark:bg-slate-800">
                 <div className="w-8 h-8 rounded-lg shadow-inner" style={{ backgroundColor: currentColor }} />
-                <span className="text-xs font-bold text-slate-600">اللون المختار</span>
+                <span className="text-xs font-bold text-slate-600 dark:text-slate-300">اللون المختار</span>
               </div>
             </div>
           </div>
 
-          <div className="bg-emerald-50 p-6 rounded-3xl border border-emerald-100">
-            <h4 className="text-sm font-bold text-emerald-900 mb-2">تعليمات التلوين ✨</h4>
-            <ul className="text-xs text-emerald-800 space-y-2 font-medium">
+          <div className="bg-emerald-50 dark:bg-slate-850 p-6 rounded-3xl border border-emerald-100 dark:border-slate-700 transition-colors">
+            <h4 className="text-sm font-bold text-emerald-900 dark:text-emerald-300 mb-2">تعليمات التلوين ✨</h4>
+            <ul className="text-xs text-emerald-800 dark:text-slate-300 space-y-2 font-medium">
               <li>• اختر لوناً من اللوحة الجانبية.</li>
               <li>• اضغط على أي جزء من الرسمة لتلوينها.</li>
               <li>• يمكنك التراجع عن آخر خطوة إذا أخطأت.</li>
@@ -225,7 +225,7 @@ export const ColoringBookView: React.FC<ColoringBookViewProps> = ({
         </div>
 
         {/* Canvas Area */}
-        <div className="lg:col-span-3 bg-white p-6 sm:p-10 rounded-[3rem] border-2 border-slate-100 shadow-xl flex items-center justify-center min-h-[500px] relative overflow-hidden">
+        <div className="lg:col-span-3 bg-white dark:bg-slate-900 p-6 sm:p-10 rounded-[3rem] border-2 border-slate-100 dark:border-slate-800 shadow-xl flex items-center justify-center min-h-[500px] relative overflow-hidden transition-colors">
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
           
           <motion.div 

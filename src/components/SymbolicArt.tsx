@@ -12,7 +12,7 @@ export const SymbolicArt: React.FC<SymbolicArtProps> = ({
   showNotice = true
 }) => {
   return (
-    <div className={`relative overflow-hidden rounded-2xl border border-amber-200/60 shadow-inner bg-gradient-to-b ${className}`}>
+    <div className={`relative overflow-hidden rounded-2xl border border-amber-200/60 dark:border-slate-800 shadow-inner bg-gradient-to-b ${className}`}>
       {/* Background SVG Scenes based on theme */}
       {theme === 'garden' && (
         <svg

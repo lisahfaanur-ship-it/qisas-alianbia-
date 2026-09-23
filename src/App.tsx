@@ -74,6 +74,32 @@ export default function App() {
   const [achievementsState, setAchievementsState] = useState<UserAchievementsState>(loadAchievementsState);
   const [newlyUnlockedBadges, setNewlyUnlockedBadges] = useState<ChildBadge[]>([]);
 
+  // Child-friendly Eye Care / Night Mode state
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+    const saved = localStorage.getItem('prophets_dark_mode');
+    if (saved !== null) {
+      return saved === 'true';
+    }
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return false;
+  });
+
+  // Sync dark class on document element
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('prophets_dark_mode', String(isDarkMode));
+  }, [isDarkMode]);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(prev => !prev);
+  };
+
   // Keep URL query string in sync with deep links for seamless sharing and browser navigation
   useEffect(() => {
     try {
@@ -215,7 +241,7 @@ export default function App() {
   const selectedProphet = prophets.find(p => p.id === activeProphetId) || prophets[0];
 
   return (
-    <div className="min-h-screen bg-[#faf8f5] text-slate-800 font-['Cairo',sans-serif] flex flex-col selection:bg-amber-200 selection:text-amber-950" dir="rtl">
+    <div className="min-h-screen bg-[#faf8f5] dark:bg-[#0b1329] text-slate-800 dark:text-slate-100 font-['Cairo',sans-serif] flex flex-col selection:bg-amber-200 selection:text-amber-950 dark:selection:bg-amber-600 dark:selection:text-white transition-colors duration-300" dir="rtl">
       {/* Navigation Header */}
       <Navbar
         currentTab={currentTab}
@@ -226,6 +252,8 @@ export default function App() {
         totalStars={achievementsState.totalStars}
         streakDays={achievementsState.readingStreakDays}
         isAdmin={!!adminUser}
+        isDarkMode={isDarkMode}
+        onToggleDarkMode={toggleDarkMode}
       />
 
       {/* Main Content View Port */}
@@ -255,6 +283,8 @@ export default function App() {
             selectedAge={selectedAge}
             onBack={() => setCurrentTab('stories')}
             onOpenSourcesList={() => setCurrentTab('sources')}
+            isGlobalDarkMode={isDarkMode}
+            onToggleGlobalDarkMode={toggleDarkMode}
           />
         )}
 

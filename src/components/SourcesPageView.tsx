@@ -77,16 +77,16 @@ export const SourcesPageView: React.FC<SourcesPageViewProps> = ({ prophets, onSe
       </div>
 
       {/* Methodology Rules */}
-      <div className="bg-white rounded-3xl p-6 sm:p-10 border-2 border-emerald-100 shadow-sm space-y-6">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border-2 border-emerald-100 dark:border-slate-800 shadow-sm space-y-6 transition-colors">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 flex items-center justify-center font-bold">
             <ShieldCheck className="w-6 h-6" />
           </div>
           <div>
-            <h2 className="text-2xl font-black text-slate-900">
+            <h2 className="text-2xl font-black text-slate-900 dark:text-white">
               قواعد ومنهجية التوثيق المتبعة
             </h2>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               ضوابط إلزامية تحكم كل كلمة وصورة معروضة في المنصة
             </p>
           </div>
@@ -96,13 +96,13 @@ export const SourcesPageView: React.FC<SourcesPageViewProps> = ({ prophets, onSe
           {methodologyRules.map((m, idx) => (
             <div
               key={idx}
-              className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2 hover:border-emerald-300 transition-colors"
+              className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 space-y-2 hover:border-emerald-300 dark:hover:border-emerald-500 transition-colors"
             >
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                <h3 className="text-sm font-bold text-slate-900">{m.rule}</h3>
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white">{m.rule}</h3>
               </div>
-              <p className="text-xs text-slate-600 leading-relaxed pr-6">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed pr-6">
                 {m.detail}
               </p>
             </div>
@@ -112,7 +112,7 @@ export const SourcesPageView: React.FC<SourcesPageViewProps> = ({ prophets, onSe
 
       {/* Primary Reference Categories */}
       <div className="space-y-6">
-        <h2 className="text-2xl font-black text-slate-900">
+        <h2 className="text-2xl font-black text-slate-900 dark:text-white">
           أمهات المصادر المعتمدة
         </h2>
 
@@ -120,24 +120,24 @@ export const SourcesPageView: React.FC<SourcesPageViewProps> = ({ prophets, onSe
           {majorReferenceCategories.map((cat, idx) => (
             <div
               key={idx}
-              className="bg-white rounded-3xl p-6 border-2 border-amber-200 shadow-sm space-y-4 flex flex-col justify-between"
+              className="bg-white dark:bg-slate-900 rounded-3xl p-6 border-2 border-amber-200 dark:border-slate-800 shadow-sm space-y-4 flex flex-col justify-between transition-colors"
             >
               <div className="space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-amber-100 text-2xl flex items-center justify-center">
+                <div className="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-950/80 text-2xl flex items-center justify-center">
                   {cat.icon}
                 </div>
-                <h3 className="text-lg font-bold text-slate-900">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
                   {cat.title}
                 </h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                   {cat.desc}
                 </p>
-                <div className="pt-2 border-t border-slate-100 space-y-1.5">
-                  <span className="text-[11px] font-bold text-amber-900 block">أمثلة الشواهد:</span>
-                  <ul className="text-xs text-slate-700 space-y-1">
+                <div className="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-1.5">
+                  <span className="text-[11px] font-bold text-amber-900 dark:text-amber-300 block">أمثلة الشواهد:</span>
+                  <ul className="text-xs text-slate-700 dark:text-slate-300 space-y-1">
                     {cat.books.map((b, bIdx) => (
                       <li key={bIdx} className="flex items-start gap-1.5">
-                        <span className="text-emerald-600 shrink-0">•</span>
+                        <span className="text-emerald-600 dark:text-emerald-400 shrink-0">•</span>
                         <span>{b}</span>
                       </li>
                     ))}
@@ -150,20 +150,20 @@ export const SourcesPageView: React.FC<SourcesPageViewProps> = ({ prophets, onSe
       </div>
 
       {/* Sources per Prophet Story */}
-      <div className="bg-white rounded-3xl p-6 sm:p-10 border-2 border-amber-200 shadow-sm space-y-6">
-        <h2 className="text-2xl font-black text-slate-900">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border-2 border-amber-200 dark:border-slate-800 shadow-sm space-y-6 transition-colors">
+        <h2 className="text-2xl font-black text-slate-900 dark:text-white">
           المصادر المفصلة لكل قصة نبي
         </h2>
 
         <div className="space-y-6">
           {prophets.map(p => (
-            <div key={p.id} className="p-6 rounded-2xl bg-amber-50/40 border border-amber-200 space-y-4">
+            <div key={p.id} className="p-6 rounded-2xl bg-amber-50/40 dark:bg-slate-800/80 border border-amber-200 dark:border-slate-700 space-y-4 transition-colors">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900">
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">
                     مصادر قصة {p.name} ({p.epithet})
                   </h3>
-                  <span className="text-xs text-emerald-800 font-semibold">
+                  <span className="text-xs text-emerald-800 dark:text-emerald-300 font-semibold">
                     حالة التدقيق: مراجعة ومعتمدة بالكامل 🟢
                   </span>
                 </div>
@@ -177,11 +177,11 @@ export const SourcesPageView: React.FC<SourcesPageViewProps> = ({ prophets, onSe
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {p.sources.map(s => (
-                  <div key={s.id} className="p-3 bg-white rounded-xl border border-slate-200 text-xs space-y-1">
-                    <span className="font-bold text-slate-900 block">{s.title}</span>
-                    <p className="text-slate-500 text-[11px] leading-relaxed">{s.referenceDetails}</p>
+                  <div key={s.id} className="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 text-xs space-y-1 transition-colors">
+                    <span className="font-bold text-slate-900 dark:text-white block">{s.title}</span>
+                    <p className="text-slate-500 dark:text-slate-400 text-[11px] leading-relaxed">{s.referenceDetails}</p>
                     {s.authenticityDegree && (
-                      <span className="inline-block mt-1 px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                      <span className="inline-block mt-1 px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 text-[10px] font-bold">
                         {s.authenticityDegree}
                       </span>
                     )}

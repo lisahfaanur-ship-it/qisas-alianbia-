@@ -46,6 +46,8 @@ interface StoryDetailViewProps {
   onStoryCompleted?: (prophetId: string) => void;
   onQuizCompleted?: (prophetId: string, score: number, total: number) => void;
   onOpenSourcesVerification?: () => void;
+  isGlobalDarkMode?: boolean;
+  onToggleGlobalDarkMode?: () => void;
 }
 
 export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
@@ -55,7 +57,9 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
   onOpenSourcesList,
   onStoryCompleted,
   onQuizCompleted,
-  onOpenSourcesVerification
+  onOpenSourcesVerification,
+  isGlobalDarkMode,
+  onToggleGlobalDarkMode
 }) => {
   const [activeChapterIndex, setActiveChapterIndex] = useState(0);
   const [completedChapters, setCompletedChapters] = useState<number[]>([0]);
@@ -114,8 +118,18 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
     return (localStorage.getItem('prophet_story_font_size') as TextFontSize) || 'md';
   });
   const [readingTheme, setReadingTheme] = useState<ReadingTheme>(() => {
+    if (isGlobalDarkMode) return 'night';
     return (localStorage.getItem('prophet_story_reading_theme') as ReadingTheme) || 'day';
   });
+
+  useEffect(() => {
+    if (isGlobalDarkMode) {
+      setReadingTheme('night');
+    } else if (readingTheme === 'night' && isGlobalDarkMode === false) {
+      setReadingTheme('day');
+    }
+  }, [isGlobalDarkMode]);
+
   const [fontFamily, setFontFamily] = useState<'cairo' | 'amiri' | 'tajawal'>(() => {
     return (localStorage.getItem('prophet_story_font_family') as 'cairo' | 'amiri' | 'tajawal') || 'cairo';
   });
@@ -141,7 +155,11 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
   }, [lineHeight]);
 
   const toggleNightMode = () => {
-    setReadingTheme(prev => (prev === 'night' ? 'day' : 'night'));
+    if (onToggleGlobalDarkMode) {
+      onToggleGlobalDarkMode();
+    } else {
+      setReadingTheme(prev => (prev === 'night' ? 'day' : 'night'));
+    }
   };
 
   const ageData = prophet.ageVariants[selectedAge];
@@ -380,30 +398,30 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
   return (
     <div className="story-detail-container space-y-10 pb-16 animate-fade-in" dir="rtl">
       {/* Top Breadcrumb and Actions Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 bg-white/80 p-4 rounded-2xl border border-amber-200 shadow-sm">
+      <div className="flex flex-wrap items-center justify-between gap-4 bg-white/80 dark:bg-slate-900/90 p-4 rounded-2xl border border-amber-200 dark:border-slate-800 shadow-sm transition-colors">
         <button
           onClick={onBack}
           id="back-to-stories-btn"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold transition-all"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-100 hover:bg-amber-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-amber-900 dark:text-amber-300 text-xs font-bold transition-all"
         >
           <ArrowRight className="w-4 h-4" />
           <span>العودة إلى مكتبة الأنبياء</span>
         </button>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-500 font-medium">الفئة العمرية المعروضة:</span>
-          <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-300">
+          <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">الفئة العمرية المعروضة:</span>
+          <span className="px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 text-xs font-bold border border-emerald-300 dark:border-emerald-700">
             {selectedAge === '5-7' ? '👶 ٥–٧ سنوات (مبسط)' : selectedAge === '8-10' ? '🧒 ٨–١٠ سنوات' : '👦 ١١–١٣ سنة (تدبر كامل)'}
           </span>
 
           <button
             onClick={() => setIsReadingPrefsOpen(true)}
             id="top-reading-prefs-btn"
-            className="p-2 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold flex items-center gap-1.5 transition-colors"
+            className="p-2 rounded-xl bg-amber-100 hover:bg-amber-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-amber-900 dark:text-amber-300 text-xs font-bold flex items-center gap-1.5 transition-colors"
             title="تخصيص القراءة وحجم الخط والوضع الليلي"
           >
             {readingTheme === 'night' ? (
-              <Moon className="w-4 h-4 text-amber-700" />
+              <Moon className="w-4 h-4 text-amber-400" />
             ) : (
               <Sliders className="w-4 h-4 text-amber-800" />
             )}
@@ -412,7 +430,7 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
 
           <button
             onClick={handleShare}
-            className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 transition-colors"
+            className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold flex items-center gap-1.5 transition-colors"
             title="مشاركة رابط القصة"
           >
             {shareCopied ? <Check className="w-4 h-4 text-emerald-600" /> : <Share2 className="w-4 h-4" />}
@@ -439,7 +457,7 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
       />
 
       {/* Hero Section */}
-      <div className="relative rounded-3xl bg-gradient-to-b from-amber-100/90 via-amber-50/70 to-white p-6 sm:p-10 border-2 border-amber-300/80 shadow-md overflow-hidden">
+      <div className="relative rounded-3xl bg-gradient-to-b from-amber-100/90 via-amber-50/70 to-white dark:from-slate-900 dark:via-slate-900/95 dark:to-slate-950 p-6 sm:p-10 border-2 border-amber-300/80 dark:border-slate-800 shadow-md overflow-hidden transition-colors">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-7 space-y-4 text-right">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-600 text-white text-xs font-bold shadow-sm">
@@ -447,22 +465,22 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
               <span>{prophet.epithet}</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight flex items-center gap-3">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight flex items-center gap-3">
               <span>قصة {prophet.name}</span>
               <button 
                 onClick={playProphetName}
-                className="p-2 rounded-full bg-white hover:bg-emerald-50 text-emerald-600 transition-all shadow-sm border border-emerald-100 group"
+                className="p-2 rounded-full bg-white hover:bg-emerald-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-emerald-600 dark:text-emerald-400 transition-all shadow-sm border border-emerald-100 dark:border-slate-700 group"
                 title="استمع لنطق اسم النبي الكريم"
               >
                 <Mic className="w-5 h-5 group-hover:scale-110 transition-transform" />
               </button>
             </h1>
 
-            <p className="text-base sm:text-lg text-emerald-900 font-semibold leading-relaxed">
+            <p className="text-base sm:text-lg text-emerald-900 dark:text-emerald-300 font-semibold leading-relaxed">
               {prophet.title}
             </p>
 
-            <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl">
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
               {ageData.summary}
             </p>
 
@@ -1315,6 +1333,8 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
         setFontFamily={setFontFamily}
         lineHeight={lineHeight}
         setLineHeight={setLineHeight}
+        isGlobalDarkMode={isGlobalDarkMode}
+        onToggleGlobalDarkMode={onToggleGlobalDarkMode}
       />
 
       {/* Source Verification Modal */}

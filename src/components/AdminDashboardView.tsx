@@ -94,12 +94,12 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col lg:flex-row -mx-4 sm:-mx-6 lg:-mx-8 -mt-8" dir="rtl">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col lg:flex-row -mx-4 sm:-mx-6 lg:-mx-8 -mt-8 transition-colors" dir="rtl">
       {/* Sidebar Navigation */}
       <aside 
         className={`${
           isSidebarOpen ? 'w-64' : 'w-20'
-        } bg-slate-900 text-white transition-all duration-300 flex flex-col z-40 fixed lg:static inset-y-0 right-0 ${
+        } bg-slate-900 dark:bg-slate-950 text-white transition-all duration-300 flex flex-col z-40 fixed lg:static inset-y-0 right-0 border-l border-transparent dark:border-slate-850 ${
           !isSidebarOpen && 'hidden lg:flex'
         }`}
       >
@@ -169,25 +169,25 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col min-w-0">
+      <main className="flex-1 flex flex-col min-w-0 bg-slate-50 dark:bg-slate-950">
         {/* Top Header Bar */}
-        <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 sticky top-0 z-30">
+        <header className="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-8 sticky top-0 z-30 transition-colors">
           <div className="flex items-center gap-4">
             <button 
               onClick={() => setIsSidebarOpen(true)}
-              className="lg:hidden p-2 hover:bg-slate-100 rounded-lg"
+              className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
             >
-              <Menu className="w-6 h-6 text-slate-600" />
+              <Menu className="w-6 h-6 text-slate-600 dark:text-slate-300" />
             </button>
-            <h2 className="text-sm font-black text-slate-900">
+            <h2 className="text-sm font-black text-slate-900 dark:text-white">
               {navItems.find(i => i.id === activeSection)?.label || 'لوحة التحكم'}
             </h2>
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-xl border border-slate-100">
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-[10px] font-bold text-slate-600">اتصال آمن وموثوق</span>
+              <span className="text-[10px] font-bold text-slate-600 dark:text-slate-300">اتصال آمن وموثوق</span>
             </div>
           </div>
         </header>

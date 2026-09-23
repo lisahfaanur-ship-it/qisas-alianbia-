@@ -59,48 +59,48 @@ export const ParentGuideView: React.FC = () => {
       </div>
 
       {/* Safety & Privacy Commitment */}
-      <div className="bg-emerald-50 rounded-3xl p-6 sm:p-8 border-2 border-emerald-200 space-y-4">
+      <div className="bg-emerald-50 dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border-2 border-emerald-200 dark:border-emerald-900/60 space-y-4 transition-colors">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center">
             <Shield className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-slate-900">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white">
               بيئة آمنة 100% وخالية من المشتتات
             </h3>
-            <p className="text-xs text-emerald-800">
+            <p className="text-xs text-emerald-800 dark:text-emerald-400">
               التزامنا بأعلى معايير سلامة الطفل وخصوصية الأسرة المسلمة
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-slate-700">
-          <div className="p-3 bg-white rounded-xl border border-emerald-100 flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-slate-700 dark:text-slate-300">
+          <div className="p-3 bg-white dark:bg-slate-800 rounded-xl border border-emerald-100 dark:border-slate-700 flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
             <span>لا نجمع أي بيانات شخصية عن الطفل أو الأسرة</span>
           </div>
-          <div className="p-3 bg-white rounded-xl border border-emerald-100 flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+          <div className="p-3 bg-white dark:bg-slate-800 rounded-xl border border-emerald-100 dark:border-slate-700 flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
             <span>خالٍ تماماً من أي إعلانات تجارية أو مشتتات</span>
           </div>
-          <div className="p-3 bg-white rounded-xl border border-emerald-100 flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+          <div className="p-3 bg-white dark:bg-slate-800 rounded-xl border border-emerald-100 dark:border-slate-700 flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
             <span>نصوص شرعية منتقاة بعناية فائقة وتوثيق معتمد</span>
           </div>
         </div>
       </div>
 
       {/* Tough theological questions for kids */}
-      <div className="bg-white rounded-3xl p-6 sm:p-10 border-2 border-amber-200 shadow-sm space-y-6">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border-2 border-amber-200 dark:border-slate-800 shadow-sm space-y-6 transition-colors">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-900 flex items-center justify-center font-bold">
+          <div className="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-300 flex items-center justify-center font-bold">
             <HelpCircle className="w-6 h-6" />
           </div>
           <div>
-            <h2 className="text-2xl font-black text-slate-900">
+            <h2 className="text-2xl font-black text-slate-900 dark:text-white">
               أجوبة ذكية وموثقة على أسئلة طفلك العقدية
             </h2>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               كيف تجيب بدقة دون تكلف ودون خروج عن عقيدة أهل السنة والجماعة؟
             </p>
           </div>
@@ -110,15 +110,15 @@ export const ParentGuideView: React.FC = () => {
           {commonQuestions.map((item, idx) => (
             <div
               key={idx}
-              className="p-5 rounded-2xl bg-amber-50/40 border border-amber-200/80 space-y-3"
+              className="p-5 rounded-2xl bg-amber-50/40 dark:bg-slate-800/70 border border-amber-200/80 dark:border-slate-700 space-y-3"
             >
-              <h3 className="text-sm font-bold text-amber-950 flex items-start gap-2">
-                <span className="w-5 h-5 rounded-full bg-amber-200 text-amber-900 flex items-center justify-center text-xs shrink-0 mt-0.5">
+              <h3 className="text-sm font-bold text-amber-950 dark:text-amber-200 flex items-start gap-2">
+                <span className="w-5 h-5 rounded-full bg-amber-200 dark:bg-amber-900 text-amber-900 dark:text-amber-200 flex items-center justify-center text-xs shrink-0 mt-0.5">
                   ؟
                 </span>
                 <span>{item.q}</span>
               </h3>
-              <p className="text-xs text-slate-700 leading-relaxed pr-7 bg-white p-3 rounded-xl border border-amber-100">
+              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed pr-7 bg-white dark:bg-slate-900 p-3 rounded-xl border border-amber-100 dark:border-slate-750">
                 {item.a}
               </p>
             </div>
@@ -127,16 +127,16 @@ export const ParentGuideView: React.FC = () => {
       </div>
 
       {/* Suggested Household & Educational Activities */}
-      <div className="bg-white rounded-3xl p-6 sm:p-10 border-2 border-emerald-100 shadow-sm space-y-6">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border-2 border-emerald-100 dark:border-slate-800 shadow-sm space-y-6 transition-colors">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 flex items-center justify-center font-bold">
             <Heart className="w-6 h-6" />
           </div>
           <div>
-            <h2 className="text-2xl font-black text-slate-900">
+            <h2 className="text-2xl font-black text-slate-900 dark:text-white">
               أنشطة عائلية ممتعة تعزز أثر القصة
             </h2>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               خطوات عملية لتحويل القصص من مجرد قراءة إلى سلوك وخلق يومي
             </p>
           </div>
@@ -146,13 +146,13 @@ export const ParentGuideView: React.FC = () => {
           {suggestedActivities.map((act, idx) => (
             <div
               key={idx}
-              className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2"
+              className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 space-y-2"
             >
-              <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-emerald-600" />
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 <span>{act.title}</span>
               </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 {act.desc}
               </p>
             </div>

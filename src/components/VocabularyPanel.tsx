@@ -33,26 +33,26 @@ export const VocabularyPanel: React.FC<VocabularyPanelProps> = ({ words }) => {
   };
 
   return (
-    <div className="bg-white rounded-3xl border-2 border-slate-100 shadow-sm overflow-hidden transition-all duration-500" dir="rtl">
+    <div className="bg-white dark:bg-slate-900 rounded-3xl border-2 border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden transition-all duration-500" dir="rtl">
       {/* Header Toggle */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full p-5 flex items-center justify-between hover:bg-slate-50 transition-colors"
+        className="w-full p-5 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors"
       >
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center shadow-sm">
+          <div className="w-10 h-10 rounded-2xl bg-amber-100 dark:bg-amber-950/80 text-amber-700 dark:text-amber-300 flex items-center justify-center shadow-sm">
             <BookText className="w-5 h-5" />
           </div>
           <div className="text-right">
-            <h3 className="text-sm font-black text-slate-900">قاموس المفردات الصعبة</h3>
-            <p className="text-[10px] text-slate-500">تعلم معاني الكلمات الجديدة في هذه القصة ({words.length})</p>
+            <h3 className="text-sm font-black text-slate-900 dark:text-white">قاموس المفردات الصعبة</h3>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400">تعلم معاني الكلمات الجديدة في هذه القصة ({words.length})</p>
           </div>
         </div>
         {isOpen ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
       </button>
 
       {/* Expanded Content */}
-      <div className={`transition-all duration-500 overflow-hidden ${isOpen ? 'max-h-[600px] border-t border-slate-50' : 'max-h-0'}`}>
+      <div className={`transition-all duration-500 overflow-hidden ${isOpen ? 'max-h-[600px] border-t border-slate-100 dark:border-slate-800' : 'max-h-0'}`}>
         <div className="p-5 space-y-4">
           {/* Search Box */}
           <div className="relative">
@@ -62,7 +62,7 @@ export const VocabularyPanel: React.FC<VocabularyPanelProps> = ({ words }) => {
               placeholder="ابحث عن كلمة..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pr-9 pl-4 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:ring-2 focus:ring-amber-400 outline-none"
+              className="w-full pr-9 pl-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:ring-2 focus:ring-amber-400 outline-none"
             />
           </div>
 
@@ -71,23 +71,23 @@ export const VocabularyPanel: React.FC<VocabularyPanelProps> = ({ words }) => {
             {filteredWords.map((word) => (
               <div 
                 key={word.id} 
-                className="p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-amber-200 hover:bg-amber-50/30 transition-all group"
+                className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-100 dark:border-slate-700 hover:border-amber-200 dark:hover:border-amber-700 hover:bg-amber-50/30 dark:hover:bg-slate-800 transition-all group"
               >
                 <div className="flex items-center justify-between mb-1">
-                  <h4 className="text-sm font-black text-emerald-800">{word.word}</h4>
+                  <h4 className="text-sm font-black text-emerald-800 dark:text-emerald-400">{word.word}</h4>
                   <button 
                     onClick={() => playPronunciation(word.word)}
-                    className="p-1.5 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-emerald-600 hover:border-emerald-200 transition-all shadow-sm"
+                    className="p-1.5 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-400 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-200 transition-all shadow-sm"
                     title="استمع للنطق الصحيح"
                   >
                     <Volume2 className="w-3.5 h-3.5" />
                   </button>
                 </div>
-                <p className="text-[11px] text-slate-600 leading-relaxed">
+                <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
                   {word.meaning}
                 </p>
                 {word.pronunciationHint && (
-                  <p className="text-[9px] text-slate-400 mt-1 italic">
+                  <p className="text-[9px] text-slate-400 dark:text-slate-400 mt-1 italic">
                     تلميح: {word.pronunciationHint}
                   </p>
                 )}
@@ -101,7 +101,7 @@ export const VocabularyPanel: React.FC<VocabularyPanelProps> = ({ words }) => {
             </div>
           )}
 
-          <div className="pt-2 flex items-center justify-center gap-1.5 text-[10px] text-amber-700 font-bold">
+          <div className="pt-2 flex items-center justify-center gap-1.5 text-[10px] text-amber-700 dark:text-amber-400 font-bold">
             <Sparkles className="w-3 h-3" />
             <span>العلم نور، واللغة العربية مفتاح لفهم قصص الأنبياء</span>
           </div>

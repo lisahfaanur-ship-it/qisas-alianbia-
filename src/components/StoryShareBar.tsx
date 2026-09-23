@@ -113,11 +113,11 @@ ${deepLink}`;
   return (
     <div
       id="story-share-section"
-      className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-50 via-white to-emerald-50/70 p-6 sm:p-8 border-2 border-amber-300/80 shadow-md transition-all duration-300"
+      className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-50 via-white to-emerald-50/70 dark:from-slate-900 dark:via-slate-850 dark:to-slate-900 p-6 sm:p-8 border-2 border-amber-300/80 dark:border-slate-750 shadow-md transition-all duration-300"
     >
       {/* Background soft ambient decoration */}
-      <div className="absolute -top-12 -left-12 w-48 h-48 rounded-full bg-amber-200/40 blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-12 -right-12 w-48 h-48 rounded-full bg-emerald-200/40 blur-3xl pointer-events-none" />
+      <div className="absolute -top-12 -left-12 w-48 h-48 rounded-full bg-amber-200/40 dark:bg-amber-500/10 blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-12 -right-12 w-48 h-48 rounded-full bg-emerald-200/40 dark:bg-emerald-500/10 blur-3xl pointer-events-none" />
 
       {/* Floating Toast Notification */}
       {toastMessage && (
@@ -130,16 +130,16 @@ ${deepLink}`;
       <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         {/* Text and context for parents */}
         <div className="space-y-2 max-w-xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 text-amber-900 text-xs font-bold border border-amber-300">
-            <Users className="w-3.5 h-3.5 text-amber-700" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 dark:bg-amber-950/60 text-amber-900 dark:text-amber-300 text-xs font-bold border border-amber-300 dark:border-amber-750">
+            <Users className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
             <span>مشاركة للوالدين والمربين</span>
           </div>
 
-          <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+          <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
             <span>شارك بركة قصة {prophet.name} مع الأهل والأصدقاء</span>
           </h3>
 
-          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
             «الدال على الخير كفاعله». شارك الرابط المباشر للقصة ليتمكن أطفال عائلتك وأصدقائك من قراءتها مباشرة بالصوت والرسوم الرمزية الآمنة.
           </p>
         </div>
@@ -184,7 +184,7 @@ ${deepLink}`;
             <button
               onClick={shareToTwitter}
               id="share-twitter-btn"
-              className="p-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 transition-all transform hover:-translate-y-0.5 shadow-sm"
+              className="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 transition-all transform hover:-translate-y-0.5 shadow-sm"
               title="مشاركة عبر منصة X (تويتر)"
               aria-label="مشاركة عبر منصة X"
             >
@@ -199,30 +199,30 @@ ${deepLink}`;
               id="copy-deep-link-btn"
               className={`p-3 rounded-2xl border transition-all transform hover:-translate-y-0.5 shadow-sm flex items-center justify-center ${
                 copied
-                  ? 'bg-emerald-100 text-emerald-800 border-emerald-300 font-bold'
-                  : 'bg-white hover:bg-amber-100/70 text-slate-700 border-amber-200'
+                  ? 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700 font-bold'
+                  : 'bg-white dark:bg-slate-800 hover:bg-amber-100/70 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 border-amber-200 dark:border-slate-700'
               }`}
               title="نسخ الرابط المباشر"
               aria-label="نسخ الرابط المباشر"
             >
-              {copied ? <Check className="w-5 h-5 text-emerald-600" /> : <Copy className="w-5 h-5" />}
+              {copied ? <Check className="w-5 h-5 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-5 h-5" />}
             </button>
           </div>
         </div>
       </div>
 
       {/* Deep Link Display pill with auto-select */}
-      <div className="mt-5 pt-4 border-t border-amber-200/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-        <div className="w-full flex-1 flex items-center gap-2 bg-white/90 px-3 py-2 rounded-xl border border-amber-200/80 text-slate-600 font-mono text-[11px] overflow-hidden">
-          <span className="text-amber-700 font-bold font-sans shrink-0">رابط القصة المباشر:</span>
-          <span className="truncate select-all text-slate-500" dir="ltr">
+      <div className="mt-5 pt-4 border-t border-amber-200/60 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+        <div className="w-full flex-1 flex items-center gap-2 bg-white/90 dark:bg-slate-800/90 px-3 py-2 rounded-xl border border-amber-200/80 dark:border-slate-750 text-slate-600 dark:text-slate-300 font-mono text-[11px] overflow-hidden">
+          <span className="text-amber-700 dark:text-amber-400 font-bold font-sans shrink-0">رابط القصة المباشر:</span>
+          <span className="truncate select-all text-slate-500 dark:text-slate-400" dir="ltr">
             {deepLink}
           </span>
         </div>
 
         <button
           onClick={handleCopyLink}
-          className="text-xs text-amber-900 hover:text-amber-950 font-bold underline shrink-0 cursor-pointer flex items-center gap-1"
+          className="text-xs text-amber-900 dark:text-amber-400 hover:text-amber-950 dark:hover:text-amber-300 font-bold underline shrink-0 cursor-pointer flex items-center gap-1"
         >
           {copied ? 'تم النسخ!' : 'نسخ الرابط'}
         </button>

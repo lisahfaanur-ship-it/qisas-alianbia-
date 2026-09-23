@@ -183,10 +183,10 @@ export const DailyChallengeCard: React.FC<DailyChallengeCardProps> = ({
       dir="rtl"
     >
       {/* Outer frame styling for child-friendly premium gamified look */}
-      <div className="relative rounded-[22px] bg-gradient-to-b from-white via-[#fffdf9] to-[#fffaf0] p-6 sm:p-8 space-y-6">
+      <div className="relative rounded-[22px] bg-gradient-to-b from-white via-[#fffdf9] to-[#fffaf0] dark:from-slate-900 dark:via-slate-900/95 dark:to-slate-950 p-6 sm:p-8 space-y-6 transition-colors">
         
         {/* Top Header: Badge, Date & Bonus Stars */}
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-amber-100 pb-5">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-amber-100 dark:border-slate-800 pb-5">
           <div className="flex items-center gap-3">
             <div className="relative flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-md shadow-orange-500/25">
               <Zap className="w-6 h-6 animate-pulse" />
@@ -197,15 +197,15 @@ export const DailyChallengeCard: React.FC<DailyChallengeCardProps> = ({
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+                <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
                   تحدي اليوم
                 </h2>
-                <span className="px-2.5 py-0.5 rounded-full bg-orange-100 text-orange-800 text-[11px] font-bold border border-orange-200">
+                <span className="px-2.5 py-0.5 rounded-full bg-orange-100 dark:bg-orange-950/80 text-orange-800 dark:text-orange-300 text-[11px] font-bold border border-orange-200 dark:border-orange-800">
                   مهمة يومية
                 </span>
               </div>
-              <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mt-0.5">
-                <Calendar className="w-3.5 h-3.5 text-amber-600" />
+              <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400 mt-0.5">
+                <Calendar className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                 <span>{arabicDateStr}</span>
               </div>
             </div>
@@ -213,14 +213,14 @@ export const DailyChallengeCard: React.FC<DailyChallengeCardProps> = ({
 
           {/* Reward Pill */}
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-2xl bg-amber-100/90 border border-amber-300 text-amber-950 font-black text-xs sm:text-sm shadow-sm">
+            <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-2xl bg-amber-100/90 dark:bg-slate-800 border border-amber-300 dark:border-slate-700 text-amber-950 dark:text-amber-300 font-black text-xs sm:text-sm shadow-sm">
               <Star className="w-4 h-4 fill-amber-400 text-amber-500" />
               <span>مكافأة الإنجاز: +30 نجمة</span>
             </div>
 
             {isCompletedToday && (
-              <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-2xl bg-emerald-100 border border-emerald-300 text-emerald-800 font-bold text-xs">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-2xl bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-300 font-bold text-xs">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 <span>مكتمل اليوم</span>
               </span>
             )}
@@ -228,7 +228,7 @@ export const DailyChallengeCard: React.FC<DailyChallengeCardProps> = ({
         </div>
 
         {/* 2. Consecutive Days Streak Bar (عداد الأيام المتتالية) */}
-        <div className="bg-gradient-to-r from-orange-50 via-amber-50/70 to-orange-50/40 rounded-2xl p-4 sm:p-5 border border-orange-200/80 shadow-inner flex flex-col lg:flex-row items-center justify-between gap-5">
+        <div className="bg-gradient-to-r from-orange-50 via-amber-50/70 to-orange-50/40 dark:from-slate-800 dark:via-slate-800/90 dark:to-slate-850 rounded-2xl p-4 sm:p-5 border border-orange-200/80 dark:border-slate-700 shadow-inner flex flex-col lg:flex-row items-center justify-between gap-5 transition-colors">
           {/* Flame Counter Badge */}
           <div className="flex items-center gap-4 w-full lg:w-auto justify-between sm:justify-start">
             <div className="relative flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 text-white shadow-lg shadow-orange-500/30 transform hover:scale-105 transition-transform">
@@ -239,14 +239,14 @@ export const DailyChallengeCard: React.FC<DailyChallengeCardProps> = ({
             </div>
             <div>
               <div className="flex items-baseline gap-2">
-                <span className="text-3xl sm:text-4xl font-black text-slate-900">
+                <span className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">
                   {streakDays}
                 </span>
-                <span className="text-sm sm:text-base font-bold text-orange-950">
+                <span className="text-sm sm:text-base font-bold text-orange-950 dark:text-orange-300">
                   {streakDays === 1 ? 'يوم متواصل' : 'أيام متتالية'}
                 </span>
               </div>
-              <p className="text-xs text-orange-800/80 font-medium">
+              <p className="text-xs text-orange-800/80 dark:text-orange-300/80 font-medium">
                 {streakDays >= 3
                   ? 'ما شاء الله! همتك مستمرة وشعلة المعرفة تتألق 🔥'
                   : 'واصل التحدي غداً للحفاظ على استمرار الشعلة!'}
@@ -264,7 +264,7 @@ export const DailyChallengeCard: React.FC<DailyChallengeCardProps> = ({
                     ? 'bg-amber-400 text-amber-950 ring-2 ring-orange-500 ring-offset-2 font-black shadow-md scale-105'
                     : day.isCompleted
                     ? 'bg-emerald-500 text-white shadow-sm'
-                    : 'bg-white text-slate-400 border border-slate-200'
+                    : 'bg-white dark:bg-slate-800 text-slate-400 border border-slate-200 dark:border-slate-700'
                 }`}
               >
                 <span className="text-[10px] font-bold block mb-1">
@@ -284,32 +284,48 @@ export const DailyChallengeCard: React.FC<DailyChallengeCardProps> = ({
           </div>
 
           {/* Next Streak Milestone Goal */}
-          <div className="w-full lg:w-48 text-right space-y-1.5 border-t lg:border-t-0 lg:border-r border-orange-200 lg:pr-5 pt-3 lg:pt-0">
-            <div className="flex items-center justify-between text-xs font-bold text-slate-700">
+          <div className="w-full lg:w-48 text-right space-y-1.5 border-t lg:border-t-0 lg:border-r border-orange-200 dark:border-slate-700 lg:pr-5 pt-3 lg:pt-0">
+            <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300">
               <span>الهدف القادم:</span>
-              <span className="text-orange-700 font-black">{streakMilestone.target} أيام</span>
+              <span className="text-orange-700 dark:text-orange-400 font-black">{streakMilestone.target} أيام</span>
             </div>
-            <div className="w-full h-2.5 bg-orange-200/70 rounded-full overflow-hidden">
+            <div className="w-full h-2.5 bg-orange-200/70 dark:bg-slate-700 rounded-full overflow-hidden">
               <div
                 className="h-full bg-gradient-to-r from-orange-500 to-amber-500 rounded-full transition-all duration-500"
                 style={{ width: `${milestoneProgress}%` }}
               />
             </div>
-            <p className="text-[11px] text-slate-500 font-medium truncate">
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium truncate">
               {streakMilestone.label}
             </p>
           </div>
         </div>
 
         {/* 3. Challenge Mode Selection Tabs */}
-        <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-100/90 max-w-md mx-auto sm:mx-0">
+        <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-100/90 dark:bg-slate-800 max-w-md mx-auto sm:mx-0">
           <button
             type="button"
             onClick={() => setActiveTab('quiz')}
             className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
               activeTab === 'quiz'
-                ? 'bg-white text-slate-900 shadow-sm font-black'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white dark:bg-slate-750 text-slate-900 dark:text-white shadow-sm font-black'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <HelpCircle className="w-4 h-4 text-orange-500" />
+            <span>سؤال التحدي السريع</span>
+            <span className="px-1.5 py-0.5 rounded-md bg-amber-100 dark:bg-slate-700 text-amber-800 dark:text-amber-300 text-[10px]">
+              +30 ⭐
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('reading')}
+            className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+              activeTab === 'reading'
+                ? 'bg-white dark:bg-slate-750 text-slate-900 dark:text-white shadow-sm font-black'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <HelpCircle className="w-4 h-4 text-orange-500" />
@@ -337,9 +353,9 @@ export const DailyChallengeCard: React.FC<DailyChallengeCardProps> = ({
         {activeTab === 'quiz' && dailyQuestion && (
           <div className="space-y-5 animate-fade-in">
             {/* Question Banner */}
-            <div className="bg-white rounded-2xl p-5 sm:p-6 border-2 border-amber-200/90 shadow-sm space-y-4">
+            <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 border-2 border-amber-200/90 dark:border-slate-800 shadow-sm space-y-4 transition-colors">
               <div className="flex items-center justify-between gap-3">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 text-amber-800 text-xs font-bold border border-amber-200">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 text-xs font-bold border border-amber-200 dark:border-amber-800">
                   <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                   <span>عن قصة: {dailyProphet.name}</span>
                 </div>
@@ -350,26 +366,26 @@ export const DailyChallengeCard: React.FC<DailyChallengeCardProps> = ({
                   onClick={toggleSpeech}
                   className={`p-2 rounded-xl border transition-all flex items-center gap-1.5 text-xs font-bold ${
                     isSpeaking
-                      ? 'bg-amber-100 text-amber-900 border-amber-300 ring-2 ring-amber-400'
-                      : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
+                      ? 'bg-amber-100 dark:bg-slate-800 text-amber-900 dark:text-amber-300 border-amber-300 dark:border-amber-500 ring-2 ring-amber-400'
+                      : 'bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700'
                   }`}
                   title="استمع إلى السؤال بصوت ناطق"
                 >
                   {isSpeaking ? (
                     <>
-                      <VolumeX className="w-4 h-4 text-amber-700" />
+                      <VolumeX className="w-4 h-4 text-amber-700 dark:text-amber-400" />
                       <span className="hidden sm:inline">إيقاف الصوت</span>
                     </>
                   ) : (
                     <>
-                      <Volume2 className="w-4 h-4 text-slate-700" />
+                      <Volume2 className="w-4 h-4 text-slate-700 dark:text-slate-300" />
                       <span className="hidden sm:inline">استمع للسؤال</span>
                     </>
                   )}
                 </button>
               </div>
 
-              <h3 className="text-base sm:text-lg font-black text-slate-900 leading-relaxed">
+              <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white leading-relaxed">
                 {dailyQuestion.question}
               </h3>
 
@@ -381,18 +397,18 @@ export const DailyChallengeCard: React.FC<DailyChallengeCardProps> = ({
                   const isCorrect = idx === dailyQuestion.correctIndex;
                   const showResult = isAnswerSubmitted || isCompletedToday;
 
-                  let optionStyle = 'bg-slate-50 border-slate-200 hover:bg-amber-50 hover:border-amber-300 text-slate-800';
+                  let optionStyle = 'bg-slate-50 dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 hover:bg-amber-50 dark:hover:bg-slate-750 text-slate-800 dark:text-slate-200';
 
                   if (showResult) {
                     if (isCorrect) {
-                      optionStyle = 'bg-emerald-50 border-emerald-400 text-emerald-950 font-bold ring-2 ring-emerald-400';
+                      optionStyle = 'bg-emerald-50 dark:bg-emerald-950/80 border-emerald-400 dark:border-emerald-600 text-emerald-950 dark:text-emerald-300 font-bold ring-2 ring-emerald-400';
                     } else if (isSelected && !isCorrect) {
-                      optionStyle = 'bg-rose-50 border-rose-300 text-rose-950 opacity-75';
+                      optionStyle = 'bg-rose-50 dark:bg-rose-950/80 border-rose-300 dark:border-rose-700 text-rose-950 dark:text-rose-300 opacity-75';
                     } else {
-                      optionStyle = 'bg-slate-50 border-slate-200 text-slate-400 opacity-60';
+                      optionStyle = 'bg-slate-50 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700 text-slate-400 opacity-60';
                     }
                   } else if (isSelected) {
-                    optionStyle = 'bg-amber-100 border-amber-500 text-amber-950 ring-2 ring-amber-400 font-bold';
+                    optionStyle = 'bg-amber-100 dark:bg-amber-950/80 border-amber-500 text-amber-950 dark:text-amber-200 ring-2 ring-amber-400 font-bold';
                   }
 
                   return (
@@ -404,14 +420,14 @@ export const DailyChallengeCard: React.FC<DailyChallengeCardProps> = ({
                       className={`p-4 rounded-xl border-2 text-right transition-all flex items-center justify-between gap-3 text-xs sm:text-sm font-semibold active:scale-[0.99] ${optionStyle}`}
                     >
                       <div className="flex items-center gap-3">
-                        <span className="w-7 h-7 rounded-lg bg-white border border-slate-200 text-slate-800 text-xs font-black flex items-center justify-center shrink-0">
+                        <span className="w-7 h-7 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs font-black flex items-center justify-center shrink-0">
                           {letters[idx]}
                         </span>
                         <span>{option}</span>
                       </div>
 
                       {showResult && isCorrect && (
-                        <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                       )}
                     </button>
                   );
@@ -439,15 +455,15 @@ export const DailyChallengeCard: React.FC<DailyChallengeCardProps> = ({
 
               {/* Instant Educational Feedback & Source */}
               {(isAnswerSubmitted || isCompletedToday) && (
-                <div className="mt-4 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-right space-y-2 animate-fade-in">
-                  <div className="flex items-center gap-2 text-emerald-800 font-black text-sm">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                <div className="mt-4 p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/80 border border-emerald-200 dark:border-emerald-800 text-right space-y-2 animate-fade-in">
+                  <div className="flex items-center gap-2 text-emerald-800 dark:text-emerald-300 font-black text-sm">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                     <span>إجابة صحيحة ومباركة! بارك الله فيك 🌟</span>
                   </div>
-                  <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                  <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
                     {dailyQuestion.explanation}
                   </p>
-                  <p className="text-[11px] text-emerald-700 font-bold border-t border-emerald-200/80 pt-1.5">
+                  <p className="text-[11px] text-emerald-700 dark:text-emerald-400 font-bold border-t border-emerald-200/80 dark:border-emerald-800/80 pt-1.5">
                     📖 المصدر: {dailyQuestion.sourceReference}
                   </p>
                 </div>
@@ -459,16 +475,16 @@ export const DailyChallengeCard: React.FC<DailyChallengeCardProps> = ({
         {/* 5. Tab 2: Reading Challenge */}
         {activeTab === 'reading' && (
           <div className="space-y-4 animate-fade-in">
-            <div className="bg-white rounded-2xl p-6 border-2 border-emerald-200/80 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border-2 border-emerald-200/80 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 transition-colors">
               <div className="space-y-3 flex-1 text-center md:text-right">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200">
-                  <BookOpen className="w-3.5 h-3.5 text-emerald-600" />
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 text-xs font-bold border border-emerald-200 dark:border-emerald-800">
+                  <BookOpen className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                   <span>قصة اليوم المقترحة</span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-black text-slate-900">
+                <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
                   {dailyProphet.name} ({dailyProphet.epithet})
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed max-w-2xl">
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium leading-relaxed max-w-2xl">
                   {dailyProphet.shortSummary}
                 </p>
 
@@ -477,7 +493,7 @@ export const DailyChallengeCard: React.FC<DailyChallengeCardProps> = ({
                   {dailyProphet.coreValues.slice(0, 3).map(v => (
                     <span
                       key={v.id}
-                      className="px-2.5 py-1 rounded-lg bg-amber-50 text-amber-900 text-[11px] font-semibold border border-amber-200"
+                      className="px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/70 text-amber-900 dark:text-amber-300 text-[11px] font-semibold border border-amber-200 dark:border-amber-800"
                     >
                       ⭐ {v.title}
                     </span>
@@ -501,9 +517,9 @@ export const DailyChallengeCard: React.FC<DailyChallengeCardProps> = ({
                   <button
                     type="button"
                     onClick={handleClaimReadingReward}
-                    className="px-6 py-3 rounded-2xl bg-amber-100 hover:bg-amber-200 text-amber-950 font-bold text-xs transition-all border border-amber-300 flex items-center justify-center gap-2"
+                    className="px-6 py-3 rounded-2xl bg-amber-100 dark:bg-slate-800 hover:bg-amber-200 dark:hover:bg-slate-700 text-amber-950 dark:text-amber-300 font-bold text-xs transition-all border border-amber-300 dark:border-slate-700 flex items-center justify-center gap-2"
                   >
-                    <CheckCircle2 className="w-4 h-4 text-amber-700" />
+                    <CheckCircle2 className="w-4 h-4 text-amber-700 dark:text-amber-400" />
                     <span>سجل إتمام القراءة اليوم (+30 ⭐)</span>
                   </button>
                 )}
@@ -514,16 +530,16 @@ export const DailyChallengeCard: React.FC<DailyChallengeCardProps> = ({
 
         {/* 6. Success / Celebratory State Notice */}
         {(isCompletedToday || justCompletedAnim) && (
-          <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-50 via-amber-50 to-emerald-50 border-2 border-emerald-300 text-center sm:text-right flex flex-col sm:flex-row items-center justify-between gap-3 animate-fade-in shadow-sm">
+          <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-50 via-amber-50 to-emerald-50 dark:from-slate-800 dark:via-slate-850 dark:to-slate-800 border-2 border-emerald-300 dark:border-emerald-700 text-center sm:text-right flex flex-col sm:flex-row items-center justify-between gap-3 animate-fade-in shadow-sm">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-emerald-500 text-white flex items-center justify-center text-xl shadow-md">
                 🏆
               </div>
               <div>
-                <h4 className="text-sm font-black text-slate-900">
+                <h4 className="text-sm font-black text-slate-900 dark:text-white">
                   أحسنت يا بطل! أتممت تحدي اليوم بنجاح
                 </h4>
-                <p className="text-xs text-slate-600 font-medium">
+                <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">
                   تمت إضافة +30 نجمة إلى رصيدك، وشعلة الأيام المتتالية ارتفعت إلى ({streakDays} {streakDays === 1 ? 'يوم' : 'أيام'})!
                 </p>
               </div>
@@ -533,7 +549,7 @@ export const DailyChallengeCard: React.FC<DailyChallengeCardProps> = ({
               <button
                 type="button"
                 onClick={() => onNavigateTab('achievements')}
-                className="px-4 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold border border-slate-200 shadow-xs flex items-center gap-1.5 transition-all"
+                className="px-4 py-2 rounded-xl bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 text-slate-800 dark:text-white text-xs font-bold border border-slate-200 dark:border-slate-600 shadow-xs flex items-center gap-1.5 transition-all"
               >
                 <Award className="w-4 h-4 text-amber-500" />
                 <span>لوحة الأوسمة</span>

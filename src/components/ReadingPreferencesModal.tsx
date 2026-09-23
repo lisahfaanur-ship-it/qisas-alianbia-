@@ -25,6 +25,8 @@ interface ReadingPreferencesModalProps {
   setFontFamily: (font: 'cairo' | 'amiri' | 'tajawal') => void;
   lineHeight: 'normal' | 'relaxed' | 'loose';
   setLineHeight: (lh: 'normal' | 'relaxed' | 'loose') => void;
+  isGlobalDarkMode?: boolean;
+  onToggleGlobalDarkMode?: () => void;
 }
 
 export const ReadingPreferencesModal: React.FC<ReadingPreferencesModalProps> = ({
@@ -37,7 +39,9 @@ export const ReadingPreferencesModal: React.FC<ReadingPreferencesModalProps> = (
   fontFamily,
   setFontFamily,
   lineHeight,
-  setLineHeight
+  setLineHeight,
+  isGlobalDarkMode,
+  onToggleGlobalDarkMode
 }) => {
   if (!isOpen) return null;
 
@@ -49,7 +53,7 @@ export const ReadingPreferencesModal: React.FC<ReadingPreferencesModalProps> = (
       aria-modal="true"
       aria-labelledby="reading-prefs-title"
     >
-      <div className="relative w-full max-w-md rounded-3xl bg-white dark:bg-slate-900 border-2 border-amber-300 shadow-2xl p-6 text-right space-y-6 overflow-hidden">
+      <div className="relative w-full max-w-md rounded-3xl bg-white dark:bg-slate-900 border-2 border-amber-300 dark:border-amber-500/40 shadow-2xl p-6 text-right space-y-6 overflow-hidden max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
           <div className="flex items-center gap-2.5">
@@ -74,6 +78,47 @@ export const ReadingPreferencesModal: React.FC<ReadingPreferencesModalProps> = (
           </button>
         </div>
 
+        {/* Global Dark Mode Switch Toggle for Children Eye Care */}
+        {onToggleGlobalDarkMode && (
+          <div className="p-3.5 rounded-2xl bg-amber-50/80 dark:bg-slate-800/80 border border-amber-200 dark:border-slate-700 flex items-center justify-between transition-colors">
+            <div className="flex items-center gap-3">
+              <div className={`p-2.5 rounded-xl ${isGlobalDarkMode ? 'bg-amber-400 text-slate-950 shadow-sm' : 'bg-white dark:bg-slate-700 text-indigo-700 dark:text-amber-300'}`}>
+                {isGlobalDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </div>
+              <div>
+                <span className="text-xs font-black text-slate-900 dark:text-white block">
+                  {isGlobalDarkMode ? 'الوضع الليلي مفعل (مريح للعين) 🌙' : 'تفعيل الوضع الليلي للمنصة 🌙'}
+                </span>
+                <span className="text-[11px] text-slate-500 dark:text-slate-400 block">
+                  يقلل إجهاد الضوء الأزرق لراحة الطفل قبل النوم
+                </span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                onToggleGlobalDarkMode();
+                if (!isGlobalDarkMode) {
+                  setTheme('night');
+                } else {
+                  setTheme('day');
+                }
+              }}
+              className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                isGlobalDarkMode ? 'bg-amber-500' : 'bg-slate-300 dark:bg-slate-600'
+              }`}
+              aria-label="تبديل الوضع الليلي للتطبيق"
+            >
+              <span
+                className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                  isGlobalDarkMode ? '-translate-x-5' : 'translate-x-0'
+                }`}
+              />
+            </button>
+          </div>
+        )}
+
         {/* Setting 1: Theme (Day / Sepia / Night) */}
         <div className="space-y-2">
           <label className="text-xs font-black text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
@@ -83,11 +128,16 @@ export const ReadingPreferencesModal: React.FC<ReadingPreferencesModalProps> = (
           <div className="grid grid-cols-3 gap-2">
             <button
               type="button"
-              onClick={() => setTheme('day')}
+              onClick={() => {
+                setTheme('day');
+                if (isGlobalDarkMode && onToggleGlobalDarkMode) {
+                  onToggleGlobalDarkMode();
+                }
+              }}
               className={`p-3 rounded-2xl border-2 transition-all flex flex-col items-center gap-1.5 ${
-                theme === 'day'
+                theme === 'day' && !isGlobalDarkMode
                   ? 'border-emerald-500 bg-emerald-50/70 text-emerald-950 font-bold shadow-sm'
-                  : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
+                  : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50'
               }`}
             >
               <Sun className="w-5 h-5 text-amber-500" />
@@ -109,9 +159,14 @@ export const ReadingPreferencesModal: React.FC<ReadingPreferencesModalProps> = (
 
             <button
               type="button"
-              onClick={() => setTheme('night')}
+              onClick={() => {
+                setTheme('night');
+                if (!isGlobalDarkMode && onToggleGlobalDarkMode) {
+                  onToggleGlobalDarkMode();
+                }
+              }}
               className={`p-3 rounded-2xl border-2 transition-all flex flex-col items-center gap-1.5 ${
-                theme === 'night'
+                theme === 'night' || isGlobalDarkMode
                   ? 'border-indigo-400 bg-slate-950 text-amber-300 font-bold shadow-sm ring-2 ring-indigo-500/30'
                   : 'border-slate-800 bg-slate-900 text-slate-200 hover:bg-slate-800'
               }`}
@@ -121,7 +176,7 @@ export const ReadingPreferencesModal: React.FC<ReadingPreferencesModalProps> = (
             </button>
           </div>
           <p className="text-[11px] text-slate-500 dark:text-slate-400 pt-0.5">
-            الوضع الليلي والورقي يخففان إجهاد العين ويحميان نوم الطفل قبل النوم.
+            الوضع الليلي والورقي يخففان إجهاد العين ويحميان نوم الطفل ليلاً.
           </p>
         </div>
 

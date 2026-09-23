@@ -49,17 +49,17 @@ export const AchievementsDashboardView: React.FC<AchievementsDashboardViewProps>
   });
 
   const getLevelBorder = (level: ChildBadge['level'], isUnlocked: boolean) => {
-    if (!isUnlocked) return 'border-slate-200 bg-slate-50/70 opacity-70';
+    if (!isUnlocked) return 'border-slate-200 dark:border-slate-750 bg-slate-50/70 dark:bg-slate-800/40 opacity-70';
     switch (level) {
       case 'diamond':
-        return 'border-sky-300 bg-gradient-to-b from-sky-50 to-white shadow-md ring-1 ring-sky-200';
+        return 'border-sky-300 dark:border-sky-700 bg-gradient-to-b from-sky-50 dark:from-slate-850 to-white dark:to-slate-900 shadow-md ring-1 ring-sky-200 dark:ring-sky-800';
       case 'gold':
-        return 'border-amber-300 bg-gradient-to-b from-amber-50/80 to-white shadow-md ring-1 ring-amber-200';
+        return 'border-amber-300 dark:border-amber-700 bg-gradient-to-b from-amber-50/80 dark:from-slate-850 to-white dark:to-slate-900 shadow-md ring-1 ring-amber-200 dark:ring-amber-800';
       case 'silver':
-        return 'border-slate-300 bg-gradient-to-b from-slate-50 to-white shadow-sm';
+        return 'border-slate-300 dark:border-slate-700 bg-gradient-to-b from-slate-50 dark:from-slate-850 to-white dark:to-slate-900 shadow-sm';
       case 'bronze':
       default:
-        return 'border-amber-700/30 bg-gradient-to-b from-amber-50/40 to-white shadow-sm';
+        return 'border-amber-700/30 dark:border-slate-700 bg-gradient-to-b from-amber-50/40 dark:from-slate-850 to-white dark:to-slate-900 shadow-sm';
     }
   };
 
@@ -129,50 +129,50 @@ export const AchievementsDashboardView: React.FC<AchievementsDashboardViewProps>
 
       {/* Metrics Row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-2xl bg-white border border-amber-200 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-xl font-bold shrink-0">
+        <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-amber-200 dark:border-slate-800 shadow-sm flex items-center gap-4 transition-colors">
+          <div className="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 flex items-center justify-center text-xl font-bold shrink-0">
             📖
           </div>
           <div>
-            <span className="text-xs text-slate-500 font-medium block">قصص أتممت قراءتها</span>
-            <span className="text-2xl font-black text-slate-900">
-              {completedStoriesCount} <span className="text-xs font-normal text-slate-500">من {prophets.length}</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium block">قصص أتممت قراءتها</span>
+            <span className="text-2xl font-black text-slate-900 dark:text-white">
+              {completedStoriesCount} <span className="text-xs font-normal text-slate-500 dark:text-slate-400">من {prophets.length}</span>
             </span>
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white border border-emerald-200 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-xl font-bold shrink-0">
+        <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-emerald-200 dark:border-slate-800 shadow-sm flex items-center gap-4 transition-colors">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 flex items-center justify-center text-xl font-bold shrink-0">
             🎯
           </div>
           <div>
-            <span className="text-xs text-slate-500 font-medium block">اختبارات منجزة بنجاح</span>
-            <span className="text-2xl font-black text-emerald-700">
-              {completedQuizzesCount} <span className="text-xs font-normal text-slate-500">اختبار</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium block">اختبارات منجزة بنجاح</span>
+            <span className="text-2xl font-black text-emerald-700 dark:text-emerald-400">
+              {completedQuizzesCount} <span className="text-xs font-normal text-slate-500 dark:text-slate-400">اختبار</span>
             </span>
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white border border-indigo-200 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-800 flex items-center justify-center text-xl font-bold shrink-0">
+        <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-indigo-200 dark:border-slate-800 shadow-sm flex items-center gap-4 transition-colors">
+          <div className="w-12 h-12 rounded-2xl bg-indigo-100 dark:bg-indigo-950/80 text-indigo-800 dark:text-indigo-300 flex items-center justify-center text-xl font-bold shrink-0">
             🏆
           </div>
           <div>
-            <span className="text-xs text-slate-500 font-medium block">الأوسمة المفتوحة</span>
-            <span className="text-2xl font-black text-indigo-900">
-              {unlockedCount} <span className="text-xs font-normal text-slate-500">وسام</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium block">الأوسمة المفتوحة</span>
+            <span className="text-2xl font-black text-indigo-900 dark:text-indigo-300">
+              {unlockedCount} <span className="text-xs font-normal text-slate-500 dark:text-slate-400">وسام</span>
             </span>
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white border border-rose-200 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-rose-100 text-rose-800 flex items-center justify-center text-xl font-bold shrink-0">
+        <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-rose-200 dark:border-slate-800 shadow-sm flex items-center gap-4 transition-colors">
+          <div className="w-12 h-12 rounded-2xl bg-rose-100 dark:bg-rose-950/80 text-rose-800 dark:text-rose-300 flex items-center justify-center text-xl font-bold shrink-0">
             🔥
           </div>
           <div>
-            <span className="text-xs text-slate-500 font-medium block">أيام المواظبة على القراءة</span>
-            <span className="text-2xl font-black text-rose-700">
-              {achievementsState.readingStreakDays} <span className="text-xs font-normal text-slate-500">أيام</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium block">أيام المواظبة على القراءة</span>
+            <span className="text-2xl font-black text-rose-700 dark:text-rose-400">
+              {achievementsState.readingStreakDays} <span className="text-xs font-normal text-slate-500 dark:text-slate-400">أيام</span>
             </span>
           </div>
         </div>
@@ -180,15 +180,15 @@ export const AchievementsDashboardView: React.FC<AchievementsDashboardViewProps>
 
       {/* Coloring Gallery Section */}
       {achievementsState.savedColoringWorks.length > 0 && (
-        <section className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-indigo-100 shadow-sm space-y-6">
+        <section className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border-2 border-indigo-100 dark:border-slate-800 shadow-sm space-y-6 transition-colors">
           <div className="flex items-center justify-between flex-wrap gap-3">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-2xl">🎨</div>
+              <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-slate-800 flex items-center justify-center text-2xl">🎨</div>
               <div>
-                <h3 className="text-xl font-black text-slate-900">
+                <h3 className="text-xl font-black text-slate-900 dark:text-white">
                   معرض أعمالي الفنية الملونة
                 </h3>
-                <p className="text-xs text-slate-500 mt-0.5">
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                   لوحات فنية من إبداع أناملك الصغيرة
                 </p>
               </div>
@@ -196,7 +196,7 @@ export const AchievementsDashboardView: React.FC<AchievementsDashboardViewProps>
             <button
               type="button"
               onClick={() => onNavigateTab('coloring')}
-              className="px-5 py-2 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold transition-all flex items-center gap-2"
+              className="px-5 py-2 rounded-xl bg-indigo-50 dark:bg-slate-800 hover:bg-indigo-100 dark:hover:bg-slate-700 text-indigo-700 dark:text-indigo-300 text-xs font-bold transition-all flex items-center gap-2"
             >
               <span>أضف لوحة جديدة</span>
               <ArrowRight className="w-4 h-4 rotate-180" />
@@ -207,25 +207,25 @@ export const AchievementsDashboardView: React.FC<AchievementsDashboardViewProps>
             {achievementsState.savedColoringWorks.map((work) => (
               <div 
                 key={work.id}
-                className="group relative bg-slate-50 rounded-2xl border-2 border-slate-100 overflow-hidden hover:border-indigo-300 transition-all aspect-square flex flex-col"
+                className="group relative bg-slate-50 dark:bg-slate-800 rounded-2xl border-2 border-slate-100 dark:border-slate-700 overflow-hidden hover:border-indigo-300 dark:hover:border-indigo-500 transition-all aspect-square flex flex-col"
               >
                 {/* SVG Render Preview (Simplified) */}
-                <div className="flex-1 bg-white p-4 flex items-center justify-center">
+                <div className="flex-1 bg-white dark:bg-slate-900 p-4 flex items-center justify-center">
                   <svg viewBox="0 0 400 400" className="w-full h-full">
                     {prophets.find(p => p.id === work.storyId)?.coloringPages?.find(cp => cp.id === work.pageId)?.svgPaths.map(path => (
                       <path
                         key={path.id}
                         d={path.d}
                         fill={work.svgData[path.id] || '#FFFFFF'}
-                        stroke="#e2e8f0"
+                        stroke="#94a3b8"
                         strokeWidth="1"
                       />
                     ))}
                   </svg>
                 </div>
-                <div className="p-3 bg-white border-t border-slate-100">
-                  <h4 className="text-[10px] font-black text-slate-900 truncate">{work.title}</h4>
-                  <div className="flex items-center gap-1 mt-1 text-[8px] text-slate-500 font-bold">
+                <div className="p-3 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
+                  <h4 className="text-[10px] font-black text-slate-900 dark:text-white truncate">{work.title}</h4>
+                  <div className="flex items-center gap-1 mt-1 text-[8px] text-slate-500 dark:text-slate-400 font-bold">
                     <Calendar className="w-2.5 h-2.5" />
                     <span>{new Date(work.savedAt).toLocaleDateString('ar-SA')}</span>
                   </div>
@@ -237,14 +237,14 @@ export const AchievementsDashboardView: React.FC<AchievementsDashboardViewProps>
       )}
 
       {/* Filter and Categories Controls */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm transition-colors">
         {/* Status Filter */}
-        <div className="inline-flex p-1 bg-slate-100 rounded-xl text-xs font-bold">
+        <div className="inline-flex p-1 bg-slate-100 dark:bg-slate-800 rounded-xl text-xs font-bold">
           <button
             type="button"
             onClick={() => setActiveFilter('all')}
             className={`px-3 py-1.5 rounded-lg transition-all ${
-              activeFilter === 'all' ? 'bg-white text-emerald-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+              activeFilter === 'all' ? 'bg-white dark:bg-slate-700 text-emerald-900 dark:text-emerald-300 shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             جميع الأوسمة ({totalBadges})
@@ -253,7 +253,7 @@ export const AchievementsDashboardView: React.FC<AchievementsDashboardViewProps>
             type="button"
             onClick={() => setActiveFilter('unlocked')}
             className={`px-3 py-1.5 rounded-lg transition-all ${
-              activeFilter === 'unlocked' ? 'bg-white text-emerald-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+              activeFilter === 'unlocked' ? 'bg-white dark:bg-slate-700 text-emerald-900 dark:text-emerald-300 shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             المكتسبة 🌟 ({unlockedCount})
@@ -262,7 +262,7 @@ export const AchievementsDashboardView: React.FC<AchievementsDashboardViewProps>
             type="button"
             onClick={() => setActiveFilter('locked')}
             className={`px-3 py-1.5 rounded-lg transition-all ${
-              activeFilter === 'locked' ? 'bg-white text-emerald-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+              activeFilter === 'locked' ? 'bg-white dark:bg-slate-700 text-emerald-900 dark:text-emerald-300 shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             قيد الفتح 🔒 ({totalBadges - unlockedCount})
@@ -275,7 +275,7 @@ export const AchievementsDashboardView: React.FC<AchievementsDashboardViewProps>
             type="button"
             onClick={() => setActiveCategory('all')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-              activeCategory === 'all' ? 'bg-amber-500 text-slate-950 font-black' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              activeCategory === 'all' ? 'bg-amber-500 text-slate-950 font-black' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
             }`}
           >
             الكل
@@ -284,7 +284,7 @@ export const AchievementsDashboardView: React.FC<AchievementsDashboardViewProps>
             type="button"
             onClick={() => setActiveCategory('story')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-              activeCategory === 'story' ? 'bg-amber-500 text-slate-950 font-black' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              activeCategory === 'story' ? 'bg-amber-500 text-slate-950 font-black' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
             }`}
           >
             📚 إتمام القصص
@@ -293,7 +293,7 @@ export const AchievementsDashboardView: React.FC<AchievementsDashboardViewProps>
             type="button"
             onClick={() => setActiveCategory('quiz')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-              activeCategory === 'quiz' ? 'bg-amber-500 text-slate-950 font-black' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              activeCategory === 'quiz' ? 'bg-amber-500 text-slate-950 font-black' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
             }`}
           >
             🎯 الاختبارات المعرفية
@@ -302,7 +302,7 @@ export const AchievementsDashboardView: React.FC<AchievementsDashboardViewProps>
             type="button"
             onClick={() => setActiveCategory('explorer')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-              activeCategory === 'explorer' ? 'bg-amber-500 text-slate-950 font-black' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              activeCategory === 'explorer' ? 'bg-amber-500 text-slate-950 font-black' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
             }`}
           >
             🔎 البحث والتلوين
@@ -311,7 +311,7 @@ export const AchievementsDashboardView: React.FC<AchievementsDashboardViewProps>
             type="button"
             onClick={() => setActiveCategory('streak')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-              activeCategory === 'streak' ? 'bg-amber-500 text-slate-950 font-black' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              activeCategory === 'streak' ? 'bg-amber-500 text-slate-950 font-black' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
             }`}
           >
             🔥 الأيام المتتالية
@@ -335,10 +335,10 @@ export const AchievementsDashboardView: React.FC<AchievementsDashboardViewProps>
             >
               {/* Badge Header: Level and Points */}
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
+                <span className="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
                   {getLevelBadgeText(badge.level)}
                 </span>
-                <span className="text-xs font-black text-amber-700 flex items-center gap-1">
+                <span className="text-xs font-black text-amber-700 dark:text-amber-400 flex items-center gap-1">
                   <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500" />
                   <span>+{badge.points}</span>
                 </span>
@@ -350,36 +350,36 @@ export const AchievementsDashboardView: React.FC<AchievementsDashboardViewProps>
                   <div
                     className={`w-20 h-20 rounded-2xl flex items-center justify-center text-4xl shadow-inner transition-transform ${
                       isUnlocked
-                        ? 'bg-amber-100 text-amber-900 transform hover:scale-110 shadow-md'
-                        : 'bg-slate-200/80 text-slate-400 grayscale'
+                        ? 'bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-300 transform hover:scale-110 shadow-md'
+                        : 'bg-slate-200/80 dark:bg-slate-800 text-slate-400 dark:text-slate-500 grayscale'
                     }`}
                   >
                     {badge.iconEmoji}
                   </div>
                   {!isUnlocked && (
-                    <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-slate-700 text-white flex items-center justify-center shadow-md">
+                    <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-slate-700 dark:bg-slate-600 text-white flex items-center justify-center shadow-md">
                       <Lock className="w-3.5 h-3.5" />
                     </div>
                   )}
                 </div>
 
-                <h3 className="text-lg font-black text-slate-900 mt-3 mb-1">
+                <h3 className="text-lg font-black text-slate-900 dark:text-white mt-3 mb-1">
                   {badge.title}
                 </h3>
-                <p className="text-xs text-slate-600 font-medium leading-relaxed min-h-[36px]">
+                <p className="text-xs text-slate-600 dark:text-slate-300 font-medium leading-relaxed min-h-[36px]">
                   {badge.description}
                 </p>
               </div>
 
               {/* Bottom: Criteria / Unlock Date */}
-              <div className="mt-4 pt-3 border-t border-slate-200/60 text-center">
+              <div className="mt-4 pt-3 border-t border-slate-200/60 dark:border-slate-750 text-center">
                 {isUnlocked ? (
-                  <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-emerald-700 bg-emerald-50 py-1.5 rounded-xl border border-emerald-200">
+                  <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 py-1.5 rounded-xl border border-emerald-200 dark:border-emerald-800">
                     <CheckCircle2 className="w-4 h-4" />
                     <span>تم الفتح بنجاح ✨</span>
                   </div>
                 ) : (
-                  <div className="text-[11px] font-bold text-slate-500 bg-slate-100 py-1.5 px-2 rounded-xl">
+                  <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 py-1.5 px-2 rounded-xl">
                     المطلوب: {badge.criteriaDescription}
                   </div>
                 )}
@@ -390,20 +390,20 @@ export const AchievementsDashboardView: React.FC<AchievementsDashboardViewProps>
       </div>
 
       {/* Suggested Next Stories to Unlock More Badges */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-amber-200 shadow-sm space-y-4">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border-2 border-amber-200 dark:border-slate-800 shadow-sm space-y-4 transition-colors">
         <div className="flex items-center justify-between flex-wrap gap-3">
           <div>
-            <h3 className="text-xl font-black text-slate-900">
+            <h3 className="text-xl font-black text-slate-900 dark:text-white">
               🚀 قصص مقترحة لفتح المزيد من الأوسمة
             </h3>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               اقرأ هذه القصص لحصد المزيد من النجوم وإكمال سجل بطولاتك المعرفية
             </p>
           </div>
           <button
             type="button"
             onClick={() => onNavigateTab('stories')}
-            className="text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1"
+            className="text-xs font-bold text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 flex items-center gap-1"
           >
             <span>استعراض كل القصص</span>
             <ArrowRight className="w-4 h-4" />
@@ -418,27 +418,27 @@ export const AchievementsDashboardView: React.FC<AchievementsDashboardViewProps>
             return (
               <div
                 key={p.id}
-                className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between gap-3 hover:border-amber-300 transition-colors"
+                className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-3 hover:border-amber-300 dark:hover:border-amber-500 transition-colors"
               >
                 <div>
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-xs font-bold text-emerald-700">{p.epithet}</span>
+                    <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400">{p.epithet}</span>
                     {isCompleted ? (
-                      <span className="text-[11px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">
+                      <span className="text-[11px] px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 font-bold">
                         مقروءة ✅
                       </span>
                     ) : (
-                      <span className="text-[11px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 font-bold">
+                      <span className="text-[11px] px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-300 font-bold">
                         بانتظارك ✨
                       </span>
                     )}
                   </div>
-                  <h4 className="text-base font-black text-slate-900">قصة {p.name}</h4>
-                  <p className="text-xs text-slate-500 mt-1 line-clamp-2">{p.shortSummary}</p>
+                  <h4 className="text-base font-black text-slate-900 dark:text-white">قصة {p.name}</h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">{p.shortSummary}</p>
                 </div>
 
-                <div className="pt-2 border-t border-slate-200 flex items-center justify-between">
-                  <span className="text-[11px] text-slate-500 font-medium">
+                <div className="pt-2 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
                     {quizRecord ? `نتيجة الاختبار: ${quizRecord.score}/${quizRecord.total}` : 'لم يختبر بعد'}
                   </span>
                   <button

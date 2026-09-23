@@ -79,7 +79,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
   return (
     <div className="space-y-14 pb-16" dir="rtl">
       {/* 16. Hero Section */}
-      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-amber-100/90 via-amber-50/50 to-white p-8 sm:p-14 border-2 border-amber-300 shadow-md">
+      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-amber-100/90 via-amber-50/50 to-white dark:from-slate-900 dark:via-slate-900/90 dark:to-slate-950 p-8 sm:p-14 border-2 border-amber-300 dark:border-slate-800 shadow-md transition-colors">
         {/* Background ambient elements */}
         <div className="absolute top-4 left-6 text-3xl opacity-20 select-none">🌙</div>
         <div className="absolute bottom-6 right-10 text-4xl opacity-15 select-none">⭐</div>
@@ -90,11 +90,11 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <span>رحلة الطفل المسلم مع قصص القرآن الكريم</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
             اكتشف قصص الأنبياء
           </h1>
 
-          <p className="text-base sm:text-xl text-slate-700 font-medium leading-relaxed">
+          <p className="text-base sm:text-xl text-slate-700 dark:text-slate-300 font-medium leading-relaxed">
             قصص عظيمة من القرآن والسنة نتعلم منها الإيمان والصبر والأمل، مصممة بطريقة ممتعة ومبسطة وموثقة بالكامل دون أي تخمين أو تجسيد.
           </p>
 
@@ -112,7 +112,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <button
               onClick={() => onNavigateTab('stories')}
               id="hero-browse-stories-btn"
-              className="px-8 py-4 rounded-2xl bg-white hover:bg-amber-50 text-slate-800 font-black text-sm sm:text-base border-2 border-amber-300 shadow-sm transition-all transform hover:-translate-y-0.5 active:scale-95 flex items-center gap-2"
+              className="px-8 py-4 rounded-2xl bg-white dark:bg-slate-800 hover:bg-amber-50 dark:hover:bg-slate-700 text-slate-800 dark:text-white font-black text-sm sm:text-base border-2 border-amber-300 dark:border-slate-700 shadow-sm transition-all transform hover:-translate-y-0.5 active:scale-95 flex items-center gap-2"
             >
               <span>تصفح القصص</span>
               <span>📚</span>
@@ -120,16 +120,16 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
 
           {/* Safety & Academic Guarantee Notice */}
-          <div className="pt-4 flex flex-wrap items-center justify-center gap-4 text-xs text-slate-600">
-            <span className="flex items-center gap-1.5 font-semibold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+          <div className="pt-4 flex flex-wrap items-center justify-center gap-4 text-xs text-slate-600 dark:text-slate-300">
+            <span className="flex items-center gap-1.5 font-semibold text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/70 px-3 py-1 rounded-full border border-emerald-200 dark:border-emerald-800">
+              <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               موثق من القرآن وصحيح السنة
             </span>
-            <span className="flex items-center gap-1.5 font-semibold text-amber-900 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
+            <span className="flex items-center gap-1.5 font-semibold text-amber-900 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/70 px-3 py-1 rounded-full border border-amber-200 dark:border-amber-800">
               <span>🎨</span>
               صور رمزية فقط (خالية من تجسيد الأنبياء)
             </span>
-            <span className="flex items-center gap-1.5 font-semibold text-sky-900 bg-sky-50 px-3 py-1 rounded-full border border-sky-200">
+            <span className="flex items-center gap-1.5 font-semibold text-sky-900 dark:text-sky-300 bg-sky-50 dark:bg-sky-950/70 px-3 py-1 rounded-full border border-sky-200 dark:border-sky-800">
               <span>👶</span>
               نظام مخصص حسب عمر الطفل ({selectedAge})
             </span>
@@ -154,16 +154,16 @@ export const HomeView: React.FC<HomeViewProps> = ({
       <section className="space-y-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
           <div>
-            <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider block mb-1">
+            <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider block mb-1">
               نماذج عالية الجودة موثقة بالسند
             </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
               أشهر قصص الأنبياء
             </h2>
           </div>
           <button
             onClick={() => onNavigateTab('stories')}
-            className="inline-flex items-center gap-1 text-sm font-bold text-emerald-700 hover:text-emerald-800"
+            className="inline-flex items-center gap-1 text-sm font-bold text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300"
           >
             <span>عرض جميع الأنبياء ({prophets.length})</span>
             <ArrowLeft className="w-4 h-4" />
@@ -176,26 +176,26 @@ export const HomeView: React.FC<HomeViewProps> = ({
             return (
               <div
                 key={p.id}
-                className="group bg-white rounded-3xl p-5 border-2 border-amber-200/80 shadow-sm hover:shadow-xl hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between"
+                className="group bg-white dark:bg-slate-900 rounded-3xl p-5 border-2 border-amber-200/80 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex flex-col justify-between"
               >
                 <div className="space-y-4">
                   {/* Symbolic Scene Image */}
                   <div className="relative overflow-hidden rounded-2xl">
                     <SymbolicArt theme={p.symbolicTheme} className="w-full h-44 sm:h-48" />
-                    <span className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-md text-[11px] font-bold text-emerald-900 border border-emerald-200 shadow-sm">
+                    <span className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md text-[11px] font-bold text-emerald-900 dark:text-emerald-300 border border-emerald-200 dark:border-slate-700 shadow-sm">
                       {p.epithet}
                     </span>
                   </div>
 
                   {/* Title & info */}
                   <div>
-                    <h3 className="text-xl font-black text-slate-900 group-hover:text-emerald-700 transition-colors">
+                    <h3 className="text-xl font-black text-slate-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
                       {p.name}
                     </h3>
-                    <p className="text-xs font-bold text-amber-700 mt-0.5 line-clamp-1">
+                    <p className="text-xs font-bold text-amber-700 dark:text-amber-400 mt-0.5 line-clamp-1">
                       {p.title}
                     </p>
-                    <p className="text-xs text-slate-600 mt-2 leading-relaxed line-clamp-3">
+                    <p className="text-xs text-slate-600 dark:text-slate-300 mt-2 leading-relaxed line-clamp-3">
                       {ageSummary}
                     </p>
                   </div>
@@ -205,7 +205,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                     {p.coreValues.slice(0, 2).map(v => (
                       <span
                         key={v.id}
-                        className="px-2.5 py-1 rounded-lg bg-amber-50 text-amber-900 text-[11px] font-semibold border border-amber-200/70"
+                        className="px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-900 dark:text-amber-300 text-[11px] font-semibold border border-amber-200/70 dark:border-amber-800/60"
                       >
                         ⭐ {v.title}
                       </span>
@@ -214,7 +214,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 </div>
 
                 {/* Card Action Buttons */}
-                <div className="pt-5 mt-5 border-t border-slate-100 flex items-center gap-2">
+                <div className="pt-5 mt-5 border-t border-slate-100 dark:border-slate-800 flex items-center gap-2">
                   <button
                     onClick={() => onSelectStory(p.id)}
                     id={`read-story-${p.id}-btn`}
@@ -227,7 +227,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   <button
                     onClick={() => onSelectStory(p.id)}
                     id={`listen-story-${p.id}-btn`}
-                    className="px-3 py-2.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold transition-all flex items-center gap-1"
+                    className="px-3 py-2.5 rounded-xl bg-amber-100 dark:bg-slate-800 hover:bg-amber-200 dark:hover:bg-slate-700 text-amber-900 dark:text-amber-300 text-xs font-bold transition-all flex items-center gap-1"
                     title="الاستماع الصوتي"
                   >
                     <Headphones className="w-4 h-4" />
@@ -241,30 +241,30 @@ export const HomeView: React.FC<HomeViewProps> = ({
       </section>
 
       {/* Interactive Timeline Teaser */}
-      <section className="bg-white rounded-3xl p-8 sm:p-10 border-2 border-amber-200 shadow-sm relative overflow-hidden group">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-amber-100 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-110" />
+      <section className="bg-white dark:bg-slate-900 rounded-3xl p-8 sm:p-10 border-2 border-amber-200 dark:border-slate-800 shadow-sm relative overflow-hidden group transition-colors">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-amber-100 dark:bg-slate-800 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-110" />
         
         <div className="relative flex flex-col md:flex-row items-center gap-8">
-          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-amber-100 flex items-center justify-center text-4xl shrink-0 shadow-inner">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-amber-100 dark:bg-slate-800 flex items-center justify-center text-4xl shrink-0 shadow-inner">
             ⏳
           </div>
           
           <div className="flex-1 space-y-4 text-center md:text-right">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 text-amber-700 text-xs font-bold border border-amber-100">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 dark:bg-slate-800 text-amber-700 dark:text-amber-400 text-xs font-bold border border-amber-100 dark:border-slate-700">
               <History className="w-3.5 h-3.5" />
               <span>ميزة جديدة</span>
             </div>
-            <h3 className="text-2xl sm:text-3xl font-black text-slate-900">
+            <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
               الخط الزمني للأنبياء والرسل
             </h3>
-            <p className="text-sm sm:text-base text-slate-600 font-medium leading-relaxed max-w-2xl">
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 font-medium leading-relaxed max-w-2xl">
               استكشف التسلسل التاريخي لبعثة الأنبياء عليهم السلام منذ بداية الخلق وحتى خاتم المرسلين، وتعرف على الفترات الزمانية لكل نبي بطريقة تفاعلية.
             </p>
           </div>
 
           <button
             onClick={() => onNavigateTab('timeline')}
-            className="px-8 py-4 rounded-2xl bg-slate-950 hover:bg-slate-900 text-white font-black text-sm sm:text-base shadow-lg transition-all transform hover:-translate-y-0.5 active:scale-95 flex items-center gap-2"
+            className="px-8 py-4 rounded-2xl bg-slate-950 dark:bg-emerald-700 hover:bg-slate-900 dark:hover:bg-emerald-600 text-white font-black text-sm sm:text-base shadow-lg transition-all transform hover:-translate-y-0.5 active:scale-95 flex items-center gap-2"
           >
             <span>عرض الخط الزمني</span>
             <ArrowLeft className="w-5 h-5" />
@@ -273,25 +273,25 @@ export const HomeView: React.FC<HomeViewProps> = ({
       </section>
       
       {/* Digital Coloring Book Teaser */}
-      <section className="bg-gradient-to-br from-indigo-50 via-white to-purple-50 rounded-3xl p-8 sm:p-10 border-2 border-indigo-100 shadow-sm relative overflow-hidden group">
-        <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-indigo-100 rounded-full blur-3xl opacity-50 group-hover:scale-125 transition-transform" />
+      <section className="bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-slate-900 dark:via-slate-900 dark:to-indigo-950/60 rounded-3xl p-8 sm:p-10 border-2 border-indigo-100 dark:border-slate-800 shadow-sm relative overflow-hidden group transition-colors">
+        <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-indigo-100 dark:bg-indigo-900/30 rounded-full blur-3xl opacity-50 group-hover:scale-125 transition-transform" />
         
         <div className="relative flex flex-col lg:flex-row items-center gap-10">
           <div className="flex-1 space-y-4 text-center lg:text-right">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold border border-indigo-200">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 text-xs font-bold border border-indigo-200 dark:border-indigo-800">
               <Palette className="w-3.5 h-3.5" />
               <span>إبداع وفن</span>
             </div>
-            <h3 className="text-2xl sm:text-4xl font-black text-slate-900 leading-tight">
+            <h3 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white leading-tight">
               لوّن وعبر عن إبداعك في كتيب التلوين الرقمي 🎨
             </h3>
-            <p className="text-sm sm:text-lg text-slate-600 font-medium leading-relaxed max-w-2xl">
+            <p className="text-sm sm:text-lg text-slate-600 dark:text-slate-300 font-medium leading-relaxed max-w-2xl">
               حول القصص التي قرأتها إلى لوحات فنية رائعة بألوانك المفضلة، واحفظ أعمالك الفنية في معرض إنجازاتك الخاص.
             </p>
             <div className="pt-2">
               <button
                 onClick={() => onNavigateTab('coloring')}
-                className="px-10 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-base sm:text-lg shadow-xl shadow-indigo-200 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center gap-3 mx-auto lg:mr-0"
+                className="px-10 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-base sm:text-lg shadow-xl shadow-indigo-200 dark:shadow-none transition-all transform hover:-translate-y-1 active:scale-95 flex items-center gap-3 mx-auto lg:mr-0"
               >
                 <span>ابدأ التلوين الآن</span>
                 <ArrowLeft className="w-6 h-6 rotate-180" />
@@ -301,14 +301,14 @@ export const HomeView: React.FC<HomeViewProps> = ({
           
           <div className="w-full lg:w-1/3 flex justify-center">
             <div className="relative w-48 h-48 sm:w-64 sm:h-64">
-              <div className="absolute inset-0 bg-white rounded-3xl border-4 border-slate-900 rotate-6 shadow-xl" />
-              <div className="absolute inset-0 bg-white rounded-3xl border-4 border-slate-900 -rotate-3 shadow-lg flex items-center justify-center p-4">
-                <svg viewBox="0 0 100 100" className="w-full h-full text-slate-200">
-                  <circle cx="50" cy="50" r="30" fill="currentColor" stroke="black" strokeWidth="2" />
-                  <path d="M50 20 L50 80 M20 50 L80 50" stroke="black" strokeWidth="2" />
+              <div className="absolute inset-0 bg-white dark:bg-slate-800 rounded-3xl border-4 border-slate-900 dark:border-slate-700 rotate-6 shadow-xl" />
+              <div className="absolute inset-0 bg-white dark:bg-slate-800 rounded-3xl border-4 border-slate-900 dark:border-slate-700 -rotate-3 shadow-lg flex items-center justify-center p-4">
+                <svg viewBox="0 0 100 100" className="w-full h-full text-slate-200 dark:text-slate-600">
+                  <circle cx="50" cy="50" r="30" fill="currentColor" stroke="currentColor" strokeWidth="2" />
+                  <path d="M50 20 L50 80 M20 50 L80 50" stroke="currentColor" strokeWidth="2" />
                 </svg>
-                <div className="absolute top-2 right-2 w-8 h-8 rounded-full bg-amber-400 border-2 border-slate-900" />
-                <div className="absolute bottom-4 left-4 w-6 h-6 rounded-full bg-rose-400 border-2 border-slate-900" />
+                <div className="absolute top-2 right-2 w-8 h-8 rounded-full bg-amber-400 border-2 border-slate-900 dark:border-slate-700" />
+                <div className="absolute bottom-4 left-4 w-6 h-6 rounded-full bg-rose-400 border-2 border-slate-900 dark:border-slate-700" />
               </div>
             </div>
           </div>
@@ -316,15 +316,15 @@ export const HomeView: React.FC<HomeViewProps> = ({
       </section>
 
       {/* ماذا ستتعلم؟ Section */}
-      <section className="bg-gradient-to-br from-emerald-50 via-amber-50/50 to-teal-50 rounded-3xl p-8 sm:p-12 border-2 border-emerald-200/80 shadow-sm space-y-8">
+      <section className="bg-gradient-to-br from-emerald-50 via-amber-50/50 to-teal-50 dark:from-slate-900 dark:via-slate-900 dark:to-emerald-950/40 rounded-3xl p-8 sm:p-12 border-2 border-emerald-200/80 dark:border-slate-800 shadow-sm space-y-8 transition-colors">
         <div className="text-center max-w-2xl mx-auto space-y-2">
-          <span className="text-xs font-bold text-emerald-800 bg-white px-3 py-1 rounded-full border border-emerald-200 inline-block shadow-sm">
+          <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300 bg-white dark:bg-slate-800 px-3 py-1 rounded-full border border-emerald-200 dark:border-slate-700 inline-block shadow-sm">
             ثمار المعرفة القرآنية
           </span>
-          <h2 className="text-2xl sm:text-4xl font-black text-slate-900">
+          <h2 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white">
             ماذا ستتعلم من قصص الأنبياء؟
           </h2>
-          <p className="text-sm text-slate-600 font-medium">
+          <p className="text-sm text-slate-600 dark:text-slate-300 font-medium">
             الهدف ليس مجرد سرد أحداث، بل استخلاص العبر وتزكية القلب وبناء الأخلاق الرفيعة
           </p>
         </div>
@@ -333,16 +333,16 @@ export const HomeView: React.FC<HomeViewProps> = ({
           {educationalValues.map((val, idx) => (
             <div
               key={idx}
-              className="bg-white p-6 rounded-2xl border border-emerald-100 shadow-sm hover:shadow-md transition-all flex items-start gap-4"
+              className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-emerald-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex items-start gap-4"
             >
-              <div className="w-12 h-12 rounded-2xl bg-amber-100 text-2xl flex items-center justify-center shrink-0 shadow-inner">
+              <div className="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-slate-800 text-2xl flex items-center justify-center shrink-0 shadow-inner">
                 {val.icon}
               </div>
               <div className="space-y-1">
-                <h3 className="text-base font-bold text-slate-900">
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">
                   {val.title}
                 </h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
+                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                   {val.desc}
                 </p>
               </div>
