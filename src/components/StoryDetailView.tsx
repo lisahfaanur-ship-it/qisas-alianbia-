@@ -27,7 +27,7 @@ import {
   Pause,
   Volume2
 } from 'lucide-react';
-import { ProphetStory, AgeGroup, SourceReference, QuranicVerse } from '../types';
+import { ProphetStory, AgeGroup, SourceReference, QuranicVerse, TadabburVerse } from '../types';
 import { SymbolicArt } from './SymbolicArt';
 import { AudioPlayerBar } from './AudioPlayerBar';
 import { StoryQuiz } from './StoryQuiz';
@@ -37,6 +37,9 @@ import { StoryShareBar } from './StoryShareBar';
 import { ReadingPreferencesModal, TextFontSize, ReadingTheme } from './ReadingPreferencesModal';
 import { InteractiveText } from './InteractiveText';
 import { VocabularyPanel } from './VocabularyPanel';
+import { VersesTadabburPanel } from './VersesTadabburPanel';
+import { TadabburModal } from './TadabburModal';
+import { getTadabburVersesForProphet } from '../data/tadabburVersesData';
 
 interface StoryDetailViewProps {
   prophet: ProphetStory;
@@ -68,6 +71,8 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
   const [modalSource, setModalSource] = useState<SourceReference | undefined>();
   const [modalVerse, setModalVerse] = useState<QuranicVerse | undefined>();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeTadabburVerse, setActiveTadabburVerse] = useState<TadabburVerse | null>(null);
+  const [isTadabburModalOpen, setIsTadabburModalOpen] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
   const [reflectionText, setReflectionText] = useState('');
   const [isReflectionSubmitted, setIsReflectionSubmitted] = useState(false);
@@ -301,6 +306,47 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
     if (onOpenSourcesVerification) {
       onOpenSourcesVerification();
     }
+  };
+
+  const handleOpenTadabburForAyah = (ayah: QuranicVerse, chapterTitle?: string) => {
+    const prophetVerses = getTadabburVersesForProphet(prophet, selectedAge);
+    const matched = prophetVerses.find(
+      v => v.surah === ayah.surah && (v.ayahNumber === ayah.ayahNumber || v.text.trim() === ayah.text.trim())
+    );
+
+    if (matched) {
+      setActiveTadabburVerse(matched);
+    } else {
+      setActiveTadabburVerse({
+        id: `ayah-${ayah.surah}-${ayah.ayahNumber}`,
+        surah: ayah.surah,
+        ayahNumber: ayah.ayahNumber,
+        text: ayah.text,
+        theme: chapterTitle ? `شاهد من فصل: ${chapterTitle}` : undefined,
+        chapterTitle,
+        audioUrl: ayah.audioUrl,
+        tafsirSource: 'تفسير السعدي والتفسير الميسر',
+        ageExplanations: {
+          '5-7': {
+            summary: ayah.explanation || `آية كريمة تخبرنا عن رعاية الله لنبيه ${prophet.name}، وتدعونا لحب الله وفعل الخير.`,
+            actionPoint: `تذكر أن الله يحبك ويرى أعمالك الطيبة دائماً.`,
+            discussionQuestion: `ما أجمل كلمة أعجبتك في هذه الآية يا بطل؟`
+          },
+          '8-10': {
+            summary: ayah.explanation || `بيان من القرآن الكريم يوضح أحداث القصة ويدعونا للاقتداء بالصالحين.`,
+            actionPoint: `اقتدِ بنبي الله ${prophet.name} في حسن الخلق والتوكل على الله.`,
+            discussionQuestion: `كيف ترتبط هذه الآية بأحداث القصة التي قرأتها؟`
+          },
+          '11-13': {
+            summary: ayah.explanation || `دلالة قرآنية تعمق الإيمان وتوجه السلوك نحو الاستقامة واليقين.`,
+            actionPoint: `اجعل هذه الآية منهجاً عملياً في حياتك اليومية بالصدق والتوكل.`,
+            discussionQuestion: `ما الدرس الإيماني المستفاد من هذه الآية الكريمة؟`,
+            deeperTafsir: `مأخوذة من سياق سورة ${ayah.surah} في تقرير دلائل النبوة والاعتبار بسير الأنبياء.`
+          }
+        }
+      });
+    }
+    setIsTadabburModalOpen(true);
   };
 
   const handleShare = () => {
@@ -689,7 +735,16 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
                             <span className="text-xs font-bold text-amber-900 bg-amber-200/80 px-2.5 py-1 rounded-md">
                               شاهد قرآني — سورة {chap.associatedAyah.surah} ({chap.associatedAyah.ayahNumber})
                             </span>
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <button
+                                type="button"
+                                onClick={() => handleOpenTadabburForAyah(chap.associatedAyah!, chap.title)}
+                                className="text-xs px-2.5 py-1 rounded-xl bg-gradient-to-l from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-black flex items-center gap-1.5 shadow-xs transition-all cursor-pointer"
+                                title="تدبر الآية وشرحها المبسط للطفل"
+                              >
+                                <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                                <span>تدبر الآية</span>
+                              </button>
                               {chap.associatedAyah.audioUrl && (
                                 <button
                                   type="button"
@@ -887,7 +942,16 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
                     <span className="text-xs font-bold text-amber-900 bg-amber-200/80 px-2.5 py-1 rounded-md">
                       شاهد قرآني — سورة {currentChapter.associatedAyah.surah} ({currentChapter.associatedAyah.ayahNumber})
                     </span>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <button
+                        type="button"
+                        onClick={() => handleOpenTadabburForAyah(currentChapter.associatedAyah!, currentChapter.title)}
+                        className="text-xs px-2.5 py-1 rounded-xl bg-gradient-to-l from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-black flex items-center gap-1.5 shadow-xs transition-all cursor-pointer"
+                        title="تدبر الآية وشرحها المبسط للطفل"
+                      >
+                        <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                        <span>تدبر الآية</span>
+                      </button>
                       {currentChapter.associatedAyah.audioUrl && (
                         <button
                           type="button"
@@ -1059,6 +1123,12 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
 
       {/* Vocabulary Dictionary Section */}
       <VocabularyPanel words={prophet.vocabulary || []} />
+
+      {/* آيات للتدبر - Quranic Verses for Contemplation with age-tailored simplified Tafsir */}
+      <VersesTadabburPanel
+        prophet={prophet}
+        selectedAge={selectedAge}
+      />
 
       {/* Section 10: ماذا نتعلم من القصة؟ */}
       <div className="bg-gradient-to-br from-emerald-50 via-teal-50/50 to-amber-50 rounded-3xl p-6 sm:p-8 border-2 border-emerald-200/80 shadow-sm">
@@ -1343,6 +1413,15 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
         onClose={() => setIsModalOpen(false)}
         source={modalSource}
         verse={modalVerse}
+        prophetName={prophet.name}
+      />
+
+      {/* Quranic Tadabbur Modal for individual chapter verses */}
+      <TadabburModal
+        isOpen={isTadabburModalOpen}
+        onClose={() => setIsTadabburModalOpen(false)}
+        verse={activeTadabburVerse}
+        defaultAge={selectedAge}
         prophetName={prophet.name}
       />
     </div>

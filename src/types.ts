@@ -24,6 +24,25 @@ export interface QuranicVerse {
   audioUrl?: string;
 }
 
+export interface AgeTadabburExplanation {
+  summary: string;
+  actionPoint: string;
+  discussionQuestion: string;
+  deeperTafsir?: string;
+}
+
+export interface TadabburVerse {
+  id: string;
+  surah: string;
+  ayahNumber: string;
+  text: string;
+  theme?: string;
+  chapterTitle?: string;
+  audioUrl?: string;
+  ageExplanations: Record<AgeGroup, AgeTadabburExplanation>;
+  tafsirSource: string;
+}
+
 export interface StoryChapter {
   id: number;
   title: string;
