@@ -2,13 +2,18 @@ export type AgeGroup = '5-7' | '8-10' | '11-13';
 
 export type StoryStatus = 'verified' | 'under_review' | 'draft' | 'needs_correction';
 
+export type EvidenceLevel = 'Primary' | 'Secondary' | 'Commentary' | 'Tradition' | 'Historical';
+export type VerificationStatus = 'Verified' | 'Reviewed' | 'Pending' | 'Needs_Source' | 'Disputed';
+
 export interface SourceReference {
   id: string;
   title: string;
-  type: 'quran' | 'hadith' | 'tafsir' | 'scholarly_reference';
+  type: 'quran' | 'hadith' | 'tafsir' | 'scholarly_reference' | 'historical_record';
   referenceDetails: string;
   textSnippet?: string;
   authenticityDegree?: string;
+  evidenceLevel?: EvidenceLevel;
+  verificationStatus?: VerificationStatus;
 }
 
 export interface QuranicVerse {
@@ -29,6 +34,14 @@ export interface StoryChapter {
     symbolicNotice: string;
   };
   associatedAyah?: QuranicVerse;
+  associatedHadith?: {
+    text: string;
+    source: string;
+    grade?: string;
+    reference: string;
+  };
+  detailedExplanation?: string;
+  chapterSources?: SourceReference[];
 }
 
 export interface CoreValue {
@@ -185,4 +198,60 @@ export interface UserAchievementsState {
   lastActiveDate: string;
   completedChallengeDates?: string[]; // list of dates YYYY-MM-DD when daily challenge was completed
   lastDailyChallengeCompletedAt?: string;
+}
+
+// --- Admin & Security Types ---
+
+export type AdminRole = 'super_admin' | 'content_manager' | 'security_admin' | 'moderator' | 'viewer';
+
+export type Permission = 
+  | 'users.view' | 'users.edit' | 'users.delete' | 'users.manage_roles'
+  | 'admins.view' | 'admins.create' | 'admins.edit' | 'admins.delete'
+  | 'content.view' | 'content.create' | 'content.edit' | 'content.delete' | 'content.publish'
+  | 'settings.view' | 'settings.edit'
+  | 'security.view_logs' | 'security.manage_sessions'
+  | 'all';
+
+export interface RoleConfig {
+  id: AdminRole;
+  label: string;
+  permissions: Permission[];
+}
+
+export interface AdminUser {
+  uid: string;
+  email: string;
+  displayName: string;
+  role: AdminRole;
+  customPermissions?: Permission[]; // Overrides or additions to role permissions
+  isActive: boolean;
+  createdAt: string;
+  lastLoginAt?: string;
+  photoURL?: string;
+}
+
+export interface AppUser {
+  uid: string;
+  email: string;
+  displayName: string;
+  role: 'user' | 'admin';
+  achievements: UserAchievementsState;
+  createdAt: string;
+  lastActiveAt: string;
+  isSuspended: boolean;
+}
+
+export interface AuditLogEntry {
+  id: string;
+  timestamp: string;
+  userId: string;
+  userEmail: string;
+  userName: string;
+  action: string; // e.g. "USER_DELETE", "STORY_PUBLISH"
+  category: 'auth' | 'content' | 'user_management' | 'security' | 'settings';
+  targetId?: string; // ID of the entity affected
+  targetType?: string; // e.g. "story", "user"
+  metadata?: Record<string, any>;
+  ipAddress?: string;
+  status: 'success' | 'failure';
 }

@@ -18,6 +18,7 @@ import {
 import { ProphetStory, AgeGroup, UserAchievementsState } from '../types';
 import { SymbolicArt } from './SymbolicArt';
 import { DailyChallengeCard } from './DailyChallengeCard';
+import { DhikrCard } from './DhikrCard';
 
 interface HomeViewProps {
   prophets: ProphetStory[];
@@ -135,6 +136,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
         </div>
       </section>
+
+      {/* Dhikr of the Day Section */}
+      <DhikrCard />
 
       {/* Daily Challenge Component: تحدي اليوم وعداد الأيام المتتالية */}
       <DailyChallengeCard

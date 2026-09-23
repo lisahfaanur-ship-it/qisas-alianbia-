@@ -27,6 +27,7 @@ interface NavbarProps {
   onOpenSearch: () => void;
   totalStars?: number;
   streakDays?: number;
+  isAdmin?: boolean;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -36,7 +37,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   setSelectedAge,
   onOpenSearch,
   totalStars = 0,
-  streakDays = 1
+  streakDays = 1,
+  isAdmin = false
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -49,9 +51,16 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'audio', label: 'الاستماع الصوتي', icon: Headphones },
     { id: 'quiz-hub', label: 'اختبر نفسك', icon: Trophy },
     { id: 'sources', label: 'المصادر والمراجع', icon: BookCheck },
-    { id: 'parents', label: 'دليل الوالدين', icon: Users },
-    { id: 'admin', label: 'الإدارة والتوثيق', icon: Settings }
+    { id: 'parents', label: 'دليل الوالدين', icon: Users }
   ];
+
+  // Only add Admin to nav if already logged in or we want it visible
+  // The user said "do not show admin if not registered".
+  // But they also want to "prevent access via URL".
+  // I'll hide it from nav unless logged in.
+  if (isAdmin) {
+    navItems.push({ id: 'admin', label: 'الإدارة والتوثيق', icon: Settings });
+  }
 
   const ageTiers: { id: AgeGroup; label: string; icon: string; desc: string }[] = [
     { id: '5-7', label: '٥–٧ سنوات', icon: '👶', desc: 'مبسط جداً وقصير' },

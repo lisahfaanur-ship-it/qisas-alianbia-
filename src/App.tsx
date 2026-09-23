@@ -22,9 +22,19 @@ import {
   saveAchievementsState,
   recordDailyChallengeCompletion
 } from './utils/achievementsManager';
-import { SavedColoringWork } from './types';
+import { SavedColoringWork, AdminUser, AppUser } from './types';
+import { AdminLoginView } from './components/AdminLoginView';
+import { useFirebase } from './components/FirebaseProvider';
+import { auth, googleProvider, db } from './firebase';
+import { signInWithPopup, signOut } from 'firebase/auth';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 export default function App() {
+  const { user, adminUser, loading: authLoading, initialized } = useFirebase();
+  
+  const [adminAuthLoading, setAdminAuthLoading] = useState(false);
+  const [adminAuthError, setAdminAuthError] = useState<string | null>(null);
+
   const [prophets, setProphets] = useState<ProphetStory[]>(() => {
     const saved = localStorage.getItem('prophets_stories_data_v1');
     if (saved) {
@@ -159,6 +169,49 @@ export default function App() {
     }
   };
 
+  const handleAdminLogin = async () => {
+    setAdminAuthLoading(true);
+    setAdminAuthError(null);
+    
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const firebaseUser = result.user;
+
+      // Seed Logic: If it's the primary user email from metadata, ensure they are an admin
+      const allowedEmails = ['lisahfaanur@gmail.com'];
+      
+      const adminRef = doc(db, 'admins', firebaseUser.uid);
+      const adminDoc = await getDoc(adminRef);
+
+      if (!adminDoc.exists() && allowedEmails.includes(firebaseUser.email || '')) {
+        // Auto-promote first owner
+        const newAdmin: AdminUser = {
+          uid: firebaseUser.uid,
+          email: firebaseUser.email || '',
+          displayName: firebaseUser.displayName || 'المدير الرئيسي',
+          role: 'super_admin',
+          isActive: true,
+          createdAt: new Date().toISOString()
+        };
+        await setDoc(adminRef, newAdmin);
+        // Page will refresh or state will update via FirebaseProvider
+      } else if (!adminDoc.exists()) {
+        await signOut(auth);
+        setAdminAuthError('عذراً، هذا الحساب ليس لديه صلاحيات وصول للوحة التحكم. يرجى التواصل مع المدير الرئيسي.');
+      }
+    } catch (error: any) {
+      console.error("Login error:", error);
+      setAdminAuthError('فشل تسجيل الدخول. يرجى المحاولة مرة أخرى.');
+    } finally {
+      setAdminAuthLoading(false);
+    }
+  };
+
+  const handleAdminLogout = async () => {
+    await signOut(auth);
+    setCurrentTab('home'); 
+  };
+
   const selectedProphet = prophets.find(p => p.id === activeProphetId) || prophets[0];
 
   return (
@@ -172,6 +225,7 @@ export default function App() {
         onOpenSearch={() => setIsSearchOpen(true)}
         totalStars={achievementsState.totalStars}
         streakDays={achievementsState.readingStreakDays}
+        isAdmin={!!adminUser}
       />
 
       {/* Main Content View Port */}
@@ -254,13 +308,23 @@ export default function App() {
         )}
 
         {currentTab === 'parents' && <ParentGuideView />}
-
+        
         {currentTab === 'admin' && (
-          <AdminDashboardView
-            prophets={prophets}
-            onUpdateProphet={handleUpdateProphet}
-            onAddProphet={handleAddProphet}
-          />
+          !adminUser ? (
+            <AdminLoginView 
+              onLogin={handleAdminLogin} 
+              isLoading={adminAuthLoading} 
+              error={adminAuthError} 
+            />
+          ) : (
+            <AdminDashboardView
+              prophets={prophets}
+              onUpdateProphet={handleUpdateProphet}
+              onAddProphet={handleAddProphet}
+              currentUser={adminUser}
+              onLogout={handleAdminLogout}
+            />
+          )
         )}
       </main>
 

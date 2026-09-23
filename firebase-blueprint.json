@@ -1,0 +1,79 @@
+{
+  "entities": {
+    "Admin": {
+      "title": "Admin User",
+      "description": "Administrator with dashboard access",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["super_admin", "content_manager", "security_admin", "moderator", "viewer"] },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "lastLoginAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role", "isActive"]
+    },
+    "AppUser": {
+      "title": "Application User",
+      "description": "Child or parent user of the app",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "admin"] },
+        "achievements": { "type": "object" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "lastActiveAt": { "type": "string", "format": "date-time" },
+        "isSuspended": { "type": "boolean" }
+      },
+      "required": ["uid", "email", "role", "isSuspended"]
+    },
+    "ProphetStory": {
+      "title": "Prophet Story",
+      "description": "The full content of a prophet's story",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "under_review", "needs_correction", "verified"] },
+        "reviewChecklist": { "type": "object" }
+      },
+      "required": ["id", "name", "status"]
+    },
+    "AuditLog": {
+      "title": "Audit Log",
+      "description": "Security and activity logs",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "userId": { "type": "string" },
+        "action": { "type": "string" },
+        "category": { "type": "string", "enum": ["auth", "content", "user_management", "security", "settings"] },
+        "status": { "type": "string", "enum": ["success", "failure"] }
+      },
+      "required": ["timestamp", "userId", "action", "status"]
+    }
+  },
+  "firestore": {
+    "admins": {
+      "schema": "Admin",
+      "description": "Administrators and their roles"
+    },
+    "users": {
+      "schema": "AppUser",
+      "description": "App users and their achievements"
+    },
+    "prophets": {
+      "schema": "ProphetStory",
+      "description": "Prophet stories and verification status"
+    },
+    "audit_logs": {
+      "schema": "AuditLog",
+      "description": "Activity logs for security auditing"
+    }
+  }
+}

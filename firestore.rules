@@ -1,0 +1,112 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // -------------------------------------------------------------------------
+    // 1. DEFAULT DENY
+    // -------------------------------------------------------------------------
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // -------------------------------------------------------------------------
+    // 2. PRIMITIVES & HELPERS
+    // -------------------------------------------------------------------------
+    function isSignedIn() { return request.auth != null; }
+    function isEmailVerified() { return isSignedIn() && request.auth.token.email_verified == true; }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    function isOwner(userId) { return isSignedIn() && request.auth.uid == userId; }
+    
+    // RBAC Lookup
+    function getAdminData() {
+      return get(/databases/$(database)/documents/admins/$(request.auth.uid)).data;
+    }
+    function isAdmin() {
+      return isSignedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+    function isSuperAdmin() {
+      return isAdmin() && getAdminData().role == 'super_admin';
+    }
+    function isContentManager() {
+      return isAdmin() && (getAdminData().role == 'content_manager' || getAdminData().role == 'super_admin');
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // -------------------------------------------------------------------------
+    // 3. VALIDATION BLUEPRINTS
+    // -------------------------------------------------------------------------
+
+    function isValidAdmin(data) {
+      return data.keys().hasAll(['uid', 'email', 'role', 'isActive'])
+        && data.keys().hasOnly(['uid', 'email', 'displayName', 'role', 'isActive', 'createdAt', 'lastLoginAt'])
+        && data.uid is string && data.uid.size() <= 128
+        && data.email is string && data.email.size() <= 256
+        && data.role in ['super_admin', 'content_manager', 'security_admin', 'moderator', 'viewer']
+        && data.isActive is bool;
+    }
+
+    function isValidAppUser(data) {
+      return data.keys().hasAll(['uid', 'email', 'role', 'isSuspended'])
+        && data.keys().hasOnly(['uid', 'email', 'displayName', 'role', 'achievements', 'createdAt', 'lastActiveAt', 'isSuspended'])
+        && data.uid == request.auth.uid
+        && data.role == 'user'
+        && data.isSuspended == false;
+    }
+
+    function isValidProphetStory(data) {
+      return data.keys().hasAll(['id', 'name', 'status'])
+        && data.keys().hasOnly(['id', 'name', 'epithet', 'title', 'shortSummary', 'symbolicTheme', 'status', 'reviewChecklist', 'ageVariants', 'coreValues', 'didYouKnow', 'vocabulary', 'cautionsAndDiscrepancies', 'sources', 'quiz', 'audioScript', 'reflectionQuestion'])
+        && data.id is string && data.id.size() <= 128
+        && data.name is string && data.name.size() <= 200
+        && data.status in ['draft', 'under_review', 'needs_correction', 'verified'];
+    }
+
+    function isValidAuditLog(data) {
+      return data.keys().hasAll(['timestamp', 'userId', 'action', 'status'])
+        && data.keys().hasOnly(['id', 'timestamp', 'userId', 'userEmail', 'userName', 'action', 'category', 'targetId', 'targetType', 'status', 'ipAddress', 'metadata'])
+        && data.timestamp == request.time
+        && data.userId == request.auth.uid;
+    }
+
+    // -------------------------------------------------------------------------
+    // 4. COLLECTION MATCHES
+    // -------------------------------------------------------------------------
+
+    // ADMINS: Only Super Admins can manage other admins. Everyone can read their own admin doc.
+    match /admins/{adminId} {
+      allow get: if isOwner(adminId) || isSuperAdmin();
+      allow list: if isSuperAdmin();
+      allow create: if isSuperAdmin() && isValidAdmin(incoming());
+      allow update: if isSuperAdmin() && isValidAdmin(incoming()) && (
+        incoming().diff(existing()).affectedKeys().hasOnly(['role', 'isActive', 'lastLoginAt'])
+      );
+      allow delete: if isSuperAdmin() && adminId != request.auth.uid; // Prevent self-deletion
+    }
+
+    // USERS: Users manage their own profile. Admins can read/suspend.
+    match /users/{userId} {
+      allow get: if isOwner(userId) || isAdmin();
+      allow list: if isAdmin();
+      allow create: if isOwner(userId) && isValidAppUser(incoming());
+      allow update: if (isOwner(userId) && isValidAppUser(incoming()) && incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'achievements', 'lastActiveAt']))
+                   || (isAdmin() && incoming().diff(existing()).affectedKeys().hasOnly(['isSuspended']));
+    }
+
+    // PROPHETS: Public read. Content managers write.
+    match /prophets/{prophetId} {
+      allow read: if true;
+      allow create: if isContentManager() && isValidProphetStory(incoming());
+      allow update: if isContentManager() && isValidProphetStory(incoming());
+      allow delete: if isSuperAdmin();
+    }
+
+    // AUDIT LOGS: Admins can create and read. No updates or deletes.
+    match /audit_logs/{logId} {
+      allow read: if isAdmin();
+      allow create: if isAdmin() && isValidAuditLog(incoming());
+    }
+  }
+}

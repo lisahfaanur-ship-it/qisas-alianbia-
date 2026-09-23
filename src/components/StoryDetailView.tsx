@@ -33,6 +33,7 @@ import { StoryReadingProgress } from './StoryReadingProgress';
 import { StoryShareBar } from './StoryShareBar';
 import { ReadingPreferencesModal, TextFontSize, ReadingTheme } from './ReadingPreferencesModal';
 import { InteractiveText } from './InteractiveText';
+import { VocabularyPanel } from './VocabularyPanel';
 
 interface StoryDetailViewProps {
   prophet: ProphetStory;
@@ -260,6 +261,15 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
     }
   };
 
+  const playProphetName = () => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(`سيدنا ${prophet.name}`);
+      utterance.lang = 'ar-SA';
+      utterance.rate = 0.85;
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
   // Helper classes for font sizes
   const getFontSizeClass = () => {
     switch (fontSize) {
@@ -395,8 +405,15 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
               <span>{prophet.epithet}</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-              قصة {prophet.name}
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight flex items-center gap-3">
+              <span>قصة {prophet.name}</span>
+              <button 
+                onClick={playProphetName}
+                className="p-2 rounded-full bg-white hover:bg-emerald-50 text-emerald-600 transition-all shadow-sm border border-emerald-100 group"
+                title="استمع لنطق اسم النبي الكريم"
+              >
+                <Mic className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              </button>
             </h1>
 
             <p className="text-base sm:text-lg text-emerald-900 font-semibold leading-relaxed">
@@ -797,6 +814,9 @@ export const StoryDetailView: React.FC<StoryDetailViewProps> = ({
           </div>
         )}
       </div>
+
+      {/* Vocabulary Dictionary Section */}
+      <VocabularyPanel words={prophet.vocabulary || []} />
 
       {/* Section 10: ماذا نتعلم من القصة؟ */}
       <div className="bg-gradient-to-br from-emerald-50 via-teal-50/50 to-amber-50 rounded-3xl p-6 sm:p-8 border-2 border-emerald-200/80 shadow-sm">
